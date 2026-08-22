@@ -1,0 +1,48 @@
+<div class="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4" (click)="close.emit()">
+  <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md" (click)="$event.stopPropagation()"></div>
+  <div class="relative w-full max-w-2xl bg-slate-800/90 border border-white/10 rounded-2xl shadow-2xl overflow-hidden" (click)="$event.stopPropagation()">
+    <div class="flex items-center gap-3 px-6 py-4 border-b border-white/10">
+      <span class="material-symbols-outlined text-on-surface-variant">search</span>
+      <input 
+        type="text" 
+        [(ngModel)]="query" 
+        (ngModelChange)="onQueryChange()"
+        placeholder="Buscar servicios... (ej: TikTok Followers)"
+        class="flex-1 bg-transparent text-on-surface placeholder:text-on-surface-variant outline-none text-lg"
+        autofocus
+      >
+      <kbd class="px-2 py-1 text-xs font-mono text-on-surface-variant bg-surface-container rounded border border-outline-variant">ESC</kbd>
+    </div>
+    <div class="max-h-[60vh] overflow-y-auto p-2">
+      @for (service of filteredServices; track service.id; let i = $index) {
+        <div 
+          class="flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-colors"
+          [class.bg-primary/10]="i === selectedIndex"
+          [class.hover:bg-surface-container]="i !== selectedIndex"
+          (click)="selectService(service)"
+          (mouseenter)="selectedIndex = i"
+        >
+          <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+            {{ service.category.slice(0, 2).toUpperCase() }}
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-on-surface">{{ service.name }}</p>
+            <p class="text-xs text-on-surface-variant">{{ service.category }} · ${{ service.ratePer1000 }}/1000</p>
+          </div>
+          <span class="text-xs text-on-surface-variant">{{ service.min }}-{{ service.max }}</span>
+        </div>
+      } @empty {
+        <div class="px-4 py-8 text-center text-sm text-on-surface-variant">
+          No se encontraron servicios
+        </div>
+      }
+    </div>
+    <div class="flex items-center justify-between px-6 py-3 border-t border-white/10 bg-slate-900/50">
+      <div class="flex gap-4 text-xs text-on-surface-variant">
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 bg-surface-container rounded border border-outline-variant font-mono">↑↓</kbd> Navegar</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 bg-surface-container rounded border border-outline-variant font-mono">↵</kbd> Seleccionar</span>
+        <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 bg-surface-container rounded border border-outline-variant font-mono">esc</kbd> Cerrar</span>
+      </div>
+    </div>
+  </div>
+</div>

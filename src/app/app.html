@@ -1,1 +1,12 @@
+<app-navbar></app-navbar>
 <router-outlet></router-outlet>
+<app-footer></app-footer>
+
+@if (showSpotlight) {
+  <app-spotlight 
+    [services]="services" 
+    (close)="onSpotlightClose()"
+  ></app-spotlight>
+}
+
+<ngx-sonner-toaster position="bottom-right" richColors closeButton></ngx-sonner-toaster>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../core/services/toast.service';
+import { ConfettiService } from '../../core/services/confetti.service';
 
 @Component({
   selector: 'app-add-funds',
@@ -10,4 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class AddFundsComponent {
   amounts = [10, 25, 50, 100];
+
+  constructor(private toast: ToastService, private confetti: ConfettiService) {}
+
+  addFunds(amount: number) {
+    this.confetti.smallCelebration();
+    this.toast.success('Saldo Actualizado', `Se agregaron $${amount} a tu saldo`);
+  }
 }

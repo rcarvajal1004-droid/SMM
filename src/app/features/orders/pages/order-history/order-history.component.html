@@ -1,0 +1,83 @@
+﻿<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-3xl font-bold text-on-surface">Historial de Órdenes</h1>
+      <button 
+        (click)="toggleView()" 
+        class="px-4 py-2 bg-surface-container border border-outline-variant rounded-lg text-sm font-medium hover:border-primary transition-colors flex items-center gap-2"
+      >
+        <span class="material-symbols-outlined text-sm">{{ compactView ? 'expand_more' : 'compress_more' }}</span>
+        {{ compactView ? 'Vista Compacta' : 'Vista Cómoda' }}
+      </button>
+    </div>
+    <div class="bg-surface rounded-2xl border border-outline-variant overflow-hidden">
+      <table class="w-full text-left">
+        <thead class="bg-surface-container">
+          <tr>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">ID</th>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">Servicio</th>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">Cantidad</th>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">Costo</th>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">Estado</th>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">Fecha</th>
+            <th class="px-6 py-4 text-sm font-medium text-on-surface-variant">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/30">
+          @for (order of orders; track order.id) {
+            @let status = statusConfig(order.status);
+            <tr class="hover:bg-surface-container/50" [class.px-2]="compactView" [class.py-1]="compactView">
+              <td class="px-6 py-4 text-sm text-on-surface">
+                <button 
+                  (click)="copyToClipboard(order.id.toString(), 'id', order.id)"
+                  class="flex items-center gap-1 hover:text-primary transition-colors"
+                >
+                  #{{ order.id }}
+                  @if (copiedId === order.id) {
+                    <span class="material-symbols-outlined text-green-600 text-sm">check_circle</span>
+                  } @else {
+                    <span class="material-symbols-outlined text-on-surface-variant text-sm">content_copy</span>
+                  }
+                </button>
+              </td>
+              <td class="px-6 py-4 text-sm text-on-surface">{{ order.serviceName }}</td>
+              <td class="px-6 py-4 text-sm text-on-surface">{{ order.quantity }}</td>
+              <td class="px-6 py-4 text-sm text-on-surface">{{ order.charge | currency }}</td>
+              <td class="px-6 py-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium {{ status.bg }} {{ status.text }}">
+                  @if (status.pulse) {
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [class]="status.text === 'text-green-700' ? 'bg-green-400' : 'bg-yellow-400'"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2" [class]="status.text === 'text-green-700' ? 'bg-green-500' : 'bg-yellow-500'"></span>
+                    </span>
+                  } @else {
+                    <span class="material-symbols-outlined text-sm">{{ status.icon }}</span>
+                  }
+                  {{ order.status }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-on-surface-variant">{{ order.createdAt }}</td>
+              <td class="px-6 py-4">
+                <button 
+                  (click)="copyToClipboard(order.link, 'link', order.id)"
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                  title="Copiar enlace"
+                >
+                  @if (copiedLink === order.id) {
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                  } @else {
+                    <span class="material-symbols-outlined">content_copy</span>
+                  }
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="px-6 py-8 text-center text-sm text-on-surface-variant">No hay órdenes registradas</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
