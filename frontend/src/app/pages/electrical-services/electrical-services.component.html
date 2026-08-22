@@ -13,8 +13,8 @@
           <a routerLink="/booking" class="bg-secondary-container text-on-secondary-container px-8 py-3 rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity border-b-2 border-[#d98b11] shadow-lg">
             Solicitar Inspección
           </a>
-          <a routerLink="/hvac-services" class="glass-panel text-primary px-8 py-3 rounded-lg font-label-md text-label-md hover:bg-surface-variant transition-colors border border-outline-variant">
-            Ver Servicios
+          <a routerLink="/quote-tool" class="glass-panel text-primary px-8 py-3 rounded-lg font-label-md text-label-md hover:bg-surface-variant transition-colors border border-outline-variant">
+            Cotizar Proyecto
           </a>
         </div>
       </div>
@@ -26,12 +26,19 @@
       </div>
     </div>
   </section>
+  <!-- Filters -->
+  <section class="py-8 px-margin-mobile md:px-margin-desktop bg-[#0F172A]">
+    <div class="max-w-container-max mx-auto flex flex-wrap gap-4">
+      <button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md border-b-2 border-secondary">Residencial</button>
+      <button class="px-6 py-2 rounded-full border border-outline-variant text-on-surface-variant hover:border-secondary hover:text-secondary font-label-md text-label-md transition-colors">Industrial</button>
+      <button class="px-6 py-2 rounded-full border border-outline-variant text-on-surface-variant hover:border-secondary hover:text-secondary font-label-md text-label-md transition-colors">Comercial</button>
+    </div>
+  </section>
   <!-- Services Bento Grid -->
   <section class="bg-surface-container-lowest py-24 px-margin-mobile md:px-margin-desktop">
     <div class="max-w-container-max mx-auto">
       <h2 class="font-headline-lg text-headline-lg mb-16 text-center">Soluciones Eléctricas Integrales</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
-        <!-- Card 1: Residential -->
         <div class="glass-panel rounded-2xl p-8 border border-outline-variant/50 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 md:col-span-1 md:row-span-1 bg-surface-container-lowest">
           <div class="w-12 h-12 bg-secondary-container/10 rounded-full flex items-center justify-center mb-4 text-secondary-container">
             <span class="material-symbols-outlined" data-icon="home">home</span>
@@ -41,7 +48,6 @@
             <p class="font-body-md text-body-md text-on-surface-variant">Modernización de cableado, actualización de paneles eléctricos e integración de smart home.</p>
           </div>
         </div>
-        <!-- Card 2: Industrial -->
         <div class="glass-panel rounded-2xl p-8 border border-outline-variant/50 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 md:col-span-2 md:row-span-1 bg-inverse-surface text-on-secondary relative overflow-hidden">
           <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiLz48L3N2Zz4=')]"></div>
           <div class="relative z-10">
@@ -52,7 +58,6 @@
             <p class="font-body-md text-body-md text-outline-variant max-w-md">Distribución de potencia de alta capacidad, conexiones de maquinaria e infraestructura compliant para manufactura.</p>
           </div>
         </div>
-        <!-- Card 3: Load Balancing -->
         <div class="glass-panel rounded-2xl p-8 border border-outline-variant/50 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 md:col-span-1 md:row-span-2 bg-surface-container-lowest">
           <div>
             <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
@@ -74,7 +79,6 @@
             </div>
           </div>
         </div>
-        <!-- Card 4: Diagnostics -->
         <div class="glass-panel rounded-2xl p-8 border border-outline-variant/50 flex flex-row items-center gap-6 hover:-translate-y-1 transition-transform duration-300 md:col-span-2 md:row-span-1 bg-surface-container-lowest">
           <div class="flex-grow">
             <div class="w-12 h-12 bg-error/10 rounded-full flex items-center justify-center mb-4 text-error">
@@ -87,7 +91,6 @@
             <img class="w-full h-full object-cover" alt="Diagnóstico eléctrico" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-bhTZra1CVq9lNhDcRdglUyn-Kofw4h4bzB30F1GOP-rVkhsuhZs2KjO--COuwSBuis5IMfXXLaZddxuHlGaats2rzGYwTB6hKthVdA9q8LNG-NzDw-wijFaCBwADO9mlMPyJYR-Bn2u-CTaOgeHQ2gPikla-zJRIvrHH5Ns7s_axg2tMHQ0a1-vVl5eypnnqRWzsH02npokw5ug1PoQFwLzEpr0bRcEBWcqI3xPyTl1UDTckl46e"/>
           </div>
         </div>
-        <!-- Card 5: Safety -->
         <div class="glass-panel rounded-2xl p-8 border border-outline-variant/50 flex flex-col justify-center items-center text-center hover:-translate-y-1 transition-transform duration-300 md:col-span-2 md:row-span-1 bg-surface-container">
           <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm text-primary">
             <span class="material-symbols-outlined text-3xl" data-icon="health_and_safety">health_and_safety</span>
