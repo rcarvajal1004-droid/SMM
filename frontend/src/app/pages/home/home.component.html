@@ -17,14 +17,14 @@
           Mantenimiento preventivo, reparaciones de emergencia e instalaciones completas. Soluciones integrales para tu confort térmico y seguridad eléctrica, disponibles las 24 horas del día.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
-          <button class="px-8 py-4 bg-tertiary-container text-on-tertiary-container rounded-lg font-label-md text-label-md border-b-2 border-tertiary hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-tertiary-container/20">
+          <a routerLink="/booking" class="px-8 py-4 bg-tertiary-container text-on-tertiary-container rounded-lg font-label-md text-label-md border-b-2 border-tertiary hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-tertiary-container/20">
             <span class="material-symbols-outlined" data-icon="emergency" data-weight="fill">emergency</span>
             Solicitar Servicio Urgente
-          </button>
-          <button class="px-8 py-4 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md border-b-2 border-primary hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20">
+          </a>
+          <a routerLink="/quote-tool" class="px-8 py-4 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md border-b-2 border-primary hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20">
             <span class="material-symbols-outlined" data-icon="calculate">calculate</span>
             Cotizar Proyecto
-          </button>
+          </a>
         </div>
       </div>
       <div class="hidden md:flex md:col-span-4 justify-end">
@@ -82,9 +82,9 @@
                 Diagnóstico de Eficiencia
               </li>
             </ul>
-            <button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:gap-2 transition-all">
+            <a routerLink="/hvac-services" class="text-primary font-label-md text-label-md flex items-center gap-1 hover:gap-2 transition-all">
               Explorar Servicios HVAC <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-            </button>
+            </a>
           </div>
         </div>
         <!-- Electricity Card -->
@@ -104,9 +104,9 @@
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm">Respuesta rápida a apagones y riesgos eléctricos.</p>
                 </div>
               </div>
-              <button class="text-secondary font-label-md text-label-md flex items-center gap-1 hover:gap-2 transition-all">
+              <a routerLink="/electrical-services" class="text-secondary font-label-md text-label-md flex items-center gap-1 hover:gap-2 transition-all">
                 Ver Soluciones Eléctricas <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -127,10 +127,10 @@
         </div>
         <h2 class="font-headline-lg text-headline-lg text-white mb-6">¿Problemas fuera de horario? Estamos aquí 24/7.</h2>
         <p class="font-body-lg text-body-lg text-outline-variant mb-8">Fugas de refrigerante, fallas de compresor en pleno verano o apagones repentinos. Nuestro equipo de respuesta rápida está listo para actuar.</p>
-        <button class="px-8 py-4 bg-error text-on-error rounded-lg font-label-md text-label-md hover:bg-error-container hover:text-on-error-container transition-colors shadow-lg shadow-error/20 flex items-center gap-2">
+        <a routerLink="/booking" class="px-8 py-4 bg-error text-on-error rounded-lg font-label-md text-label-md hover:bg-error-container hover:text-on-error-container transition-colors shadow-lg shadow-error/20 flex items-center gap-2">
           <span class="material-symbols-outlined" data-icon="call">call</span>
           Llamar a Emergencias (800) 123-4567
-        </button>
+        </a>
       </div>
       <div class="relative z-10 w-full md:w-1/3">
         <div class="bg-surface/10 backdrop-blur-md border border-white/10 rounded-2xl p-6">
