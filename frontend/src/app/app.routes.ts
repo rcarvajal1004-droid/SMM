@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { ClimatechLayoutComponent } from './pages/layout/climatech-layout.component';
 import { SmmLayoutComponent } from './features/smm-layout/smm-layout.component';
+import { LandingComponent } from './features/landing/landing.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
@@ -9,6 +11,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        loadComponent: () => import('./features/landing/landing.component').then(m => m.LandingComponent)
+      },
+      {
+        path: 'home',
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
       },
       {
