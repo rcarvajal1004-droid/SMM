@@ -1,0 +1,19 @@
+<div class="min-h-screen bg-background">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-on-surface mb-6">Recargar Saldo</h1>
+    <div class="bg-surface rounded-2xl border border-outline-variant p-8">
+      <p class="text-on-surface-variant mb-6">Selecciona el monto a recargar:</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        @for (amount of amounts; track amount) {
+          <button class="py-3 px-4 rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-colors">
+            ${{ amount }}
+          </button>
+        }
+      </div>
+      <div class="flex gap-4">
+        <input type="number" placeholder="Monto personalizado" class="flex-1 px-4 py-3 bg-surface-container rounded-lg border border-outline-variant">
+        <button class="px-6 py-3 bg-primary text-on-primary rounded-lg font-medium">Recargar</button>
+      </div>
+    </div>
+  </div>
+</div>

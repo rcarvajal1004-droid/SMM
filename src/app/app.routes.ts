@@ -1,15 +1,29 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { HvacServicesComponent } from './pages/hvac-services/hvac-services.component';
-import { ElectricalServicesComponent } from './pages/electrical-services/electrical-services.component';
-import { BookingComponent } from './pages/booking/booking.component';
-import { QuoteToolComponent } from './pages/quote-tool/quote-tool.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'hvac-services', component: HvacServicesComponent },
-  { path: 'electrical-services', component: ElectricalServicesComponent },
-  { path: 'booking', component: BookingComponent },
-  { path: 'quote-tool', component: QuoteToolComponent },
+  {
+    path: '',
+    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
+  },
+  {
+    path: 'orders/new',
+    loadComponent: () => import('./features/orders/pages/new-order/new-order.component').then(m => m.NewOrderComponent)
+  },
+  {
+    path: 'orders/history',
+    loadComponent: () => import('./features/orders/pages/order-history/order-history.component').then(m => m.OrderHistoryComponent)
+  },
+  {
+    path: 'services',
+    loadComponent: () => import('./features/services/services.component').then(m => m.ServicesComponent)
+  },
+  {
+    path: 'add-funds',
+    loadComponent: () => import('./features/add-funds/add-funds.component').then(m => m.AddFundsComponent)
+  },
+  { path: '**', redirectTo: '' }
 ];

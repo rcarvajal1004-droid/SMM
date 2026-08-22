@@ -1,0 +1,30 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  template: `
+    <div class="min-h-screen bg-background">
+      <div class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-on-surface mb-4">Panel SMM</h1>
+        <p class="text-on-surface-variant mb-8">Gestiona tus servicios y órdenes de redes sociales</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <a routerLink="/orders/new" class="block p-6 bg-surface rounded-2xl border border-outline-variant hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-on-surface mb-2">Nueva Orden</h3>
+            <p class="text-sm text-on-surface-variant">Crear orden individual o masiva</p>
+          </a>
+          <a routerLink="/orders/history" class="block p-6 bg-surface rounded-2xl border border-outline-variant hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-on-surface mb-2">Historial</h3>
+            <p class="text-sm text-on-surface-variant">Ver órdenes anteriores</p>
+          </a>
+          <a routerLink="/services" class="block p-6 bg-surface rounded-2xl border border-outline-variant hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-on-surface mb-2">Servicios</h3>
+            <p class="text-sm text-on-surface-variant">Catálogo de servicios</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  `,
+  styles: []
+})
+export class HomeComponent {}

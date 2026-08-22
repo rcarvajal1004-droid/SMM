@@ -2,18 +2,12 @@
 
 body {
     font-family: 'Inter', sans-serif;
+    background-color: #faf8ff;
+    color: #131b2e;
 }
 
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-
-.material-symbols-outlined[data-weight="fill"] {
-    font-variation-settings: 'FILL' 1;
-}
-
-.filled-icon {
-    font-variation-settings: 'FILL' 1;
 }
 
 .glass-panel {
@@ -43,3 +37,4 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #6e7881;
 }
+
