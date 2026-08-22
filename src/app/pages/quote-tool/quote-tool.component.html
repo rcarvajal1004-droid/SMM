@@ -1,0 +1,214 @@
+<main class="flex-grow pt-24 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 relative bg-background text-on-background">
+  <!-- Abstract Background Decoration -->
+  <div class="absolute top-0 right-0 -z-10 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] opacity-70 transform translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[80px] opacity-60 transform -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
+  <!-- Header Section -->
+  <div class="mb-12 max-w-3xl">
+    <h1 class="font-display-lg text-display-lg md:font-display-lg md:text-display-lg text-primary mb-4 tracking-tight">
+      Herramientas de <span class="text-secondary">Estimación</span>
+    </h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">
+      Utiliza nuestra calculadora para determinar la capacidad de enfriamiento ideal para tu espacio, o inicia una cotización detallada para servicios de instalación y mantenimiento eléctrico o HVAC.
+    </p>
+  </div>
+  <!-- Bento Grid Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+    <!-- TOOL 1: Calculadora de BTU (lg:col-span-4) -->
+    <div class="lg:col-span-4 bg-surface-container-lowest rounded-2xl border border-outline-variant p-6 shadow-[0_20px_25px_-5px_rgba(15,23,42,0.05)] relative overflow-hidden flex flex-col h-full">
+      <!-- Subtle top accent line -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined">ac_unit</span>
+        </div>
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-surface">Calculadora de BTU</h2>
+          <p class="font-label-md text-label-md text-outline">Estima el tonelaje necesario</p>
+        </div>
+      </div>
+      <form class="space-y-4 flex-grow" id="btuForm" (submit)="$event.preventDefault()">
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface mb-1" for="area">Área del Espacio (m²)</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+              <span class="material-symbols-outlined text-sm">square_foot</span>
+            </span>
+            <input class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" id="area" name="area" placeholder="Ej. 25" required="" type="number" (input)="calculateBTU()"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface mb-1" for="people">Personas</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+                <span class="material-symbols-outlined text-sm">group</span>
+              </span>
+              <input class="w-full pl-10 pr-3 py-2 bg-surface border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" id="people" min="1" name="people" type="number" value="2" (input)="calculateBTU()"/>
+            </div>
+          </div>
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface mb-1" for="sun">Exposición Solar</label>
+            <div class="relative">
+              <select class="w-full pl-3 pr-8 py-2 appearance-none bg-surface border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" id="sun" name="sun" (change)="calculateBTU()">
+                <option value="low">Baja (Sombra)</option>
+                <option selected="" value="normal">Normal</option>
+                <option value="high">Alta (Directa)</option>
+              </select>
+              <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-outline">
+                <span class="material-symbols-outlined text-sm">expand_more</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Result Box -->
+      <div class="mt-6 bg-surface-container rounded-xl p-5 border border-primary/20 text-center transition-all duration-300 relative overflow-hidden" id="btuResultContainer">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+        <p class="font-label-md text-label-md text-on-surface-variant mb-1 relative z-10">Capacidad Recomendada</p>
+        <div class="flex items-end justify-center gap-1 relative z-10">
+          <span class="font-display-lg text-display-lg text-primary leading-none" id="btuValue">0</span>
+          <span class="font-body-md text-body-md text-on-surface-variant mb-1">BTU/h</span>
+        </div>
+        <div class="mt-2 inline-flex items-center gap-1 bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full border border-white/40">
+          <span class="material-symbols-outlined text-primary text-sm">info</span>
+          <span class="font-label-md text-label-md text-primary" id="tonValue">Aprox. 0 Toneladas</span>
+        </div>
+      </div>
+    </div>
+    <!-- TOOL 2: Cotizador Multi-paso (lg:col-span-8) -->
+    <div class="lg:col-span-8 bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-[0_20px_25px_-5px_rgba(15,23,42,0.05)] flex flex-col overflow-hidden">
+      <!-- Progress Header -->
+      <div class="bg-surface-container-low px-6 py-4 border-b border-outline-variant relative z-10">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">request_quote</span>
+            Cotizador de Servicio
+          </h2>
+          <span class="font-label-md text-label-md text-primary bg-primary/10 px-3 py-1 rounded-full" id="stepIndicatorText">Paso 1 de 3</span>
+        </div>
+        <!-- Progress Bar Track -->
+        <div class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden">
+          <!-- Progress Bar Fill -->
+          <div class="bg-gradient-to-r from-primary to-secondary h-full rounded-full transition-all duration-500 ease-out w-1/3" id="progressBar"></div>
+        </div>
+        <!-- Step Labels -->
+        <div class="flex justify-between mt-2 font-label-md text-label-md text-outline">
+          <span class="text-primary" id="labelStep1">1. Servicio</span>
+          <span id="labelStep2">2. Detalles</span>
+          <span id="labelStep3">3. Resumen</span>
+        </div>
+      </div>
+      <!-- Form Content Area -->
+      <div class="p-6 md:p-8 flex-grow relative bg-white">
+        <!-- STEP 1: Servicio -->
+        <div *ngIf="currentStep === 1" class="transition-opacity duration-300">
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-2">¿Qué tipo de servicio necesitas?</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6">Selecciona la categoría principal para tu cotización.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Option A: HVAC -->
+            <label class="cursor-pointer group">
+              <input checked="" class="peer sr-only" name="serviceType" type="radio" value="hvac"/>
+              <div class="h-full rounded-xl border-2 border-outline-variant p-5 transition-all hover:border-primary/50 peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-sm flex flex-col gap-3">
+                <div class="w-12 h-12 rounded-full bg-surface-container-high group-hover:bg-primary/10 peer-checked:bg-primary/20 flex items-center justify-center transition-colors">
+                  <span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary text-2xl">heat_pump</span>
+                </div>
+                <h4 class="font-headline-md text-headline-md text-on-surface">Sistemas HVAC</h4>
+                <p class="font-body-md text-body-md text-on-surface-variant text-sm">Instalación, mantenimiento y reparación de aire acondicionado y calefacción.</p>
+              </div>
+            </label>
+            <!-- Option B: Eléctrico -->
+            <label class="cursor-pointer group">
+              <input class="peer sr-only" name="serviceType" type="radio" value="electric"/>
+              <div class="h-full rounded-xl border-2 border-outline-variant p-5 transition-all hover:border-secondary/50 peer-checked:border-secondary peer-checked:bg-secondary/5 peer-checked:shadow-sm flex flex-col gap-3">
+                <div class="w-12 h-12 rounded-full bg-surface-container-high group-hover:bg-secondary/10 peer-checked:bg-secondary/20 flex items-center justify-center transition-colors">
+                  <span class="material-symbols-outlined text-on-surface-variant peer-checked:text-secondary text-2xl">bolt</span>
+                </div>
+                <h4 class="font-headline-md text-headline-md text-on-surface">Servicios Eléctricos</h4>
+                <p class="font-body-md text-body-md text-on-surface-variant text-sm">Cableado, paneles eléctricos, iluminación y reparaciones de emergencia.</p>
+              </div>
+            </label>
+          </div>
+        </div>
+        <!-- STEP 2: Detalles -->
+        <div *ngIf="currentStep === 2" class="transition-opacity duration-300">
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Detalles del Proyecto</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6">Proporciona un poco más de información para un presupuesto más preciso.</p>
+          <div class="space-y-5">
+            <div>
+              <label class="block font-label-md text-label-md text-on-surface mb-2">Tipo de Propiedad</label>
+              <div class="flex flex-wrap gap-3">
+                <label class="cursor-pointer">
+                  <input checked="" class="peer sr-only" name="propertyType" type="radio" value="residencial"/>
+                  <div class="px-4 py-2 rounded-full border border-outline-variant peer-checked:border-primary peer-checked:bg-primary text-on-surface peer-checked:text-on-primary font-label-md text-label-md transition-all">Residencial</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input class="peer sr-only" name="propertyType" type="radio" value="comercial"/>
+                  <div class="px-4 py-2 rounded-full border border-outline-variant peer-checked:border-primary peer-checked:bg-primary text-on-surface peer-checked:text-on-primary font-label-md text-label-md transition-all">Comercial</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input class="peer sr-only" name="propertyType" type="radio" value="industrial"/>
+                  <div class="px-4 py-2 rounded-full border border-outline-variant peer-checked:border-primary peer-checked:bg-primary text-on-surface peer-checked:text-on-primary font-label-md text-label-md transition-all">Industrial</div>
+                </label>
+              </div>
+            </div>
+            <div>
+              <label class="block font-label-md text-label-md text-on-surface mb-2" for="urgency">Nivel de Urgencia</label>
+              <select class="w-full md:w-1/2 px-4 py-2 bg-surface border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="urgency">
+                <option value="standard">Estándar (Próximos días)</option>
+                <option value="urgent">Urgente (Mismo día / 24h)</option>
+                <option value="planning">Planificación (Próximas semanas)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-label-md text-label-md text-on-surface mb-2" for="description">Breve Descripción (Opcional)</label>
+              <textarea class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none" id="description" placeholder="Ej. Necesito instalar 2 mini-splits en habitaciones de 12m2..." rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- STEP 3: Resumen -->
+        <div *ngIf="currentStep === 3" class="transition-opacity duration-300">
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="material-symbols-outlined text-primary text-3xl">task_alt</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface">Resumen de Cotización</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Revisa tus datos antes de contactarnos.</p>
+          </div>
+          <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant mb-6 space-y-3">
+            <div class="flex justify-between items-center border-b border-outline-variant/50 pb-2">
+              <span class="font-label-md text-label-md text-outline">Servicio Seleccionado</span>
+              <span class="font-body-md text-body-md text-on-surface font-medium capitalize" id="summaryService">Sistemas HVAC</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-outline-variant/50 pb-2">
+              <span class="font-label-md text-label-md text-outline">Tipo de Propiedad</span>
+              <span class="font-body-md text-body-md text-on-surface font-medium capitalize" id="summaryProperty">Residencial</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-label-md text-label-md text-outline">Urgencia</span>
+              <span class="font-body-md text-body-md text-on-surface font-medium capitalize" id="summaryUrgency">Estándar</span>
+            </div>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant text-center text-sm mb-6">
+            Haz clic en el botón abajo para enviarnos esta información vía WhatsApp. Nuestro equipo te responderá con un presupuesto detallado.
+          </p>
+        </div>
+      </div>
+      <!-- Form Navigation Footer -->
+      <div class="bg-surface-container px-6 py-4 border-t border-outline-variant flex justify-between items-center mt-auto">
+        <button class="hidden font-label-md text-label-md text-on-surface-variant hover:text-primary px-4 py-2 rounded-lg transition-colors flex items-center gap-1" id="btnPrev" (click)="prevStep()">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          Atrás
+        </button>
+        <div class="flex-grow"></div> <!-- Spacer -->
+        <button class="font-label-md text-label-md bg-primary text-on-primary px-6 py-2.5 rounded-lg border-b-2 border-on-primary-fixed-variant hover:brightness-110 active:scale-95 transition-all shadow-sm flex items-center gap-2" id="btnNext" (click)="nextStep()">
+          Siguiente
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+        <button class="hidden font-label-md text-label-md bg-secondary text-on-secondary px-6 py-2.5 rounded-lg border-b-2 border-secondary-container hover:brightness-110 active:scale-95 transition-all shadow-sm flex items-center gap-2" id="btnSubmit" (click)="submitQuote()">
+          <svg aria-hidden="true" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"></path></svg>
+          Enviar por WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
