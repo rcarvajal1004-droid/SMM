@@ -66,7 +66,7 @@ export class LandingComponent implements OnInit, OnDestroy {
   readonly services: ServiceFeature[] = [
     { icon: '⚡', title: 'Procesamiento Automático', description: 'Tus pedidos se procesan en segundos, sin intervención manual.' },
     { icon: '🔌', title: 'API REST', description: 'Integra nuestros servicios directamente en tu plataforma.' },
-    { icon: '🛡️', title: 'Soporte 24/7', description: 'Equipo dedicado disponible en cualquier momento.' },
+    { icon: '🛡️', title: 'Soporte Dedicado', description: 'Equipo especializado disponible para resolver tus dudas en cualquier momento.' },
     { icon: '💳', title: 'Múltiples Métodos de Pago', description: 'Paga con tarjeta, transferencia o criptomonedas.' }
   ];
 

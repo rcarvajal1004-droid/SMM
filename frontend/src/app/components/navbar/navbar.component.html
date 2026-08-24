@@ -34,10 +34,6 @@
           {{ themeService.isDark() ? 'light_mode' : 'dark_mode' }}
         </span>
       </button>
-
-      <a routerLink="/booking" class="flex items-center justify-center bg-error text-on-error px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-error/90 hover:shadow-lg hover:shadow-error/20 transition-all duration-300 shadow-sm active:scale-95">
-        24/7 Emergency
-      </a>
     </div>
 
     <!-- Mobile Action Buttons -->
@@ -71,9 +67,6 @@
     <a routerLink="/electrical-services" (click)="closeMobileMenu()" routerLinkActive="text-primary font-bold" class="block text-on-surface-variant hover:text-primary py-2 font-label-md text-label-md">Electrical Services</a>
     <a routerLink="/quote-tool" (click)="closeMobileMenu()" routerLinkActive="text-primary font-bold" class="block text-on-surface-variant hover:text-primary py-2 font-label-md text-label-md">Quote Tool</a>
     <a routerLink="/booking" (click)="closeMobileMenu()" routerLinkActive="text-primary font-bold" class="block text-on-surface-variant hover:text-primary py-2 font-label-md text-label-md">Booking</a>
-    <a routerLink="/booking" (click)="closeMobileMenu()" class="block text-center bg-error text-on-error py-2.5 rounded-lg font-label-md text-label-md mt-2">
-      24/7 Emergency
-    </a>
   </div>
 </header>
 

@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('heroTitle', { static: true }) heroTitle!: ElementRef;
   @ViewChild('heroDesc', { static: true }) heroDesc!: ElementRef;
 
-  readonly heroWords = ['Climatización HVAC', 'Servicios Eléctricos', 'Emergencias 24/7'];
+  readonly heroWords = ['Climatización HVAC', 'Servicios Eléctricos', 'Mantenimiento Integral'];
   typedWord = '';
   private wordIndex = 0;
   private typeTimer: any = null;

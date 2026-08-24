@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
+import { AnimationService } from '../../shared/services/animation.service';
 
 @Component({
   selector: 'app-quote-tool',
@@ -12,6 +13,7 @@ import { ToastService } from '../../services/toast.service';
 })
 export class QuoteToolComponent {
   toastService = inject(ToastService);
+  private animations = inject(AnimationService);
 
   // BTU Calculator State
   btuArea: number | null = 20;
@@ -19,6 +21,7 @@ export class QuoteToolComponent {
   btuSun: 'low' | 'normal' | 'high' = 'normal';
   btuCalculated: number = 12000;
   tonsCalculated: string = '1.0';
+  private btuTarget: number = 12000;
 
   // Multi-step Quote State
   currentStep: number = 1;
@@ -57,8 +60,14 @@ export class QuoteToolComponent {
     }
 
     btu = Math.ceil(btu / 500) * 500;
-    this.btuCalculated = btu;
-    this.tonsCalculated = (btu / 12000).toFixed(1);
+    this.btuTarget = btu;
+    // Transición numérica animada (no salto brusco)
+    const from = this.btuCalculated;
+    this.animations.countUp(from, btu, 0.6, (v) => {
+      const rounded = Math.round(v / 100) * 100;
+      this.btuCalculated = rounded;
+      this.tonsCalculated = (rounded / 12000).toFixed(1);
+    });
   }
 
   nextStep(): void {

@@ -211,4 +211,42 @@ input[type="range"].slider-amber::-webkit-slider-thumb:hover {
     background: #6e7881;
 }
 
+/* ── Accesibilidad y refinamiento global ─────────────────── */
+
+/* Focus visible consistente en toda la app */
+:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Lenis: evita saltos bruscos del smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* Respeta prefers-reduced-motion en todo el sistema */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Estado de carga para botones */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+button .animate-spin {
+  animation: spin 0.8s linear infinite;
+}
+
+
 
