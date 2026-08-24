@@ -1,4 +1,5 @@
 ﻿import { Router } from 'express';
+import { validateBalance } from '../middleware/validate.js';
 
 const router = Router();
 
@@ -8,14 +9,9 @@ router.get('/', (req, res) => {
   res.json({ balance });
 });
 
-router.post('/add', (req, res) => {
-  const { amount } = req.body;
-  if (amount && amount > 0) {
-    balance += amount;
-    res.json({ balance });
-  } else {
-    res.status(400).json({ error: 'Invalid amount' });
-  }
+router.post('/add', validateBalance, (req, res) => {
+  balance += req.body.amount;
+  res.json({ balance });
 });
 
 export default router;

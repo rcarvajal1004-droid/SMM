@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SmmApiService } from '../../../../core/services/smm-api.service';
-import { SmmOrder } from '../../../../core/models/smm.model';
+import { SmmApiService } from '../../../smm/data-access/smm-api.service';
+import { SmmOrder } from '../../../smm/models/smm.model';
 
 @Component({
   selector: 'app-order-history',

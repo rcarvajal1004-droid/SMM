@@ -1,0 +1,69 @@
+<main class="climatech-page min-h-screen pt-[120px] pb-24 bg-[#0F172A] text-white px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-5xl mx-auto">
+    <header class="max-w-3xl mb-12">
+      <a routerLink="/" class="inline-flex items-center gap-2 text-sky-300 hover:text-white transition-colors font-label-md mb-7">
+        <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_back</span>
+        Volver al inicio
+      </a>
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-sky-400/15 border border-sky-300/30 rounded-full text-sky-200 font-label-md text-xs mb-5">
+        <span class="material-symbols-outlined text-sm" aria-hidden="true">health_and_safety</span>
+        Diagnóstico inicial
+      </span>
+      <h1 class="font-display-lg text-display-lg leading-tight mb-4">¿Qué problema presenta tu aire?</h1>
+      <p class="font-body-lg text-slate-200 max-w-2xl">Selecciona el síntoma principal y recibe una orientación inicial. El diagnóstico definitivo lo realiza un técnico en sitio.</p>
+    </header>
+
+    <section aria-labelledby="symptoms-title">
+      <h2 id="symptoms-title" class="font-headline-md text-headline-md mb-5">Selecciona un síntoma</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        @for (option of options; track option.id) {
+          <button type="button" (click)="select(option.id)" [attr.aria-pressed]="selectedId() === option.id" class="diagnostic-option text-left p-5 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 hover:border-sky-300/60 transition-all focus:ring-2 focus:ring-sky-300 focus:outline-none" [class.diagnostic-selected]="selectedId() === option.id">
+            <span class="material-symbols-outlined text-3xl text-sky-300 mb-5" aria-hidden="true">{{ option.icon }}</span>
+            <span class="block font-label-md text-label-md text-white font-bold">{{ option.label }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    @if (selected(); as diagnosis) {
+      <section class="diagnostic-result mt-10 rounded-2xl border border-sky-300/30 bg-slate-900/70 p-6 md:p-8" aria-live="polite">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-5 mb-8">
+          <div>
+            <p class="text-sm text-slate-300 mb-2">Resultado orientativo para</p>
+            <h2 class="font-headline-md text-headline-md text-white">{{ diagnosis.label }}</h2>
+          </div>
+          <span class="{{ diagnosis.urgencyClass }} inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full text-sm font-bold">
+            <span class="material-symbols-outlined text-base" aria-hidden="true">priority_high</span>
+            {{ diagnosis.urgency }}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-label-md text-label-md text-sky-200 mb-3">Posibles causas</h3>
+            <ul class="space-y-3 text-slate-200">
+              @for (cause of diagnosis.causes; track cause) {
+                <li class="flex items-start gap-2"><span class="material-symbols-outlined text-base text-sky-300 mt-0.5" aria-hidden="true">check_circle</span>{{ cause }}</li>
+              }
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-label-md text-label-md text-sky-200 mb-3">Recomendación</h3>
+            <p class="text-slate-200 leading-relaxed">{{ diagnosis.recommendation }}</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-white/10">
+          <a [href]="whatsappUrl()" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#25D366] text-[#052e16] rounded-lg font-label-md font-bold hover:bg-[#20bd5a] transition-colors focus:ring-2 focus:ring-[#25D366] focus:outline-none">
+            <span class="material-symbols-outlined" aria-hidden="true">chat</span>
+            Enviar diagnóstico por WhatsApp
+          </a>
+          <a routerLink="/booking" class="inline-flex items-center justify-center gap-2 px-5 py-3 border border-sky-300/50 text-sky-100 rounded-lg font-label-md hover:bg-sky-300/10 transition-colors focus:ring-2 focus:ring-sky-300 focus:outline-none">
+            <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+            Agendar visita
+          </a>
+        </div>
+      </section>
+    }
+  </div>
+</main>

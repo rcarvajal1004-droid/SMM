@@ -1,0 +1,67 @@
+<main class="climatech-page min-h-screen pt-[120px] pb-24 bg-[#0F172A] text-white px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-6xl mx-auto">
+    <header class="max-w-3xl mb-12">
+      <a routerLink="/" class="inline-flex items-center gap-2 text-sky-300 hover:text-white transition-colors font-label-md mb-7">
+        <span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_back</span>
+        Volver al inicio
+      </a>
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-sky-400/15 border border-sky-300/30 rounded-full text-sky-200 font-label-md text-xs mb-5">
+        <span class="material-symbols-outlined text-sm" aria-hidden="true">menu_book</span>
+        Centro de ayuda técnico
+      </span>
+      <h1 class="font-display-lg text-display-lg leading-tight mb-4">Decide con información clara</h1>
+      <p class="font-body-lg text-slate-200 max-w-2xl">Guías prácticas y herramientas para entender tu equipo, prevenir fallas y llegar mejor preparado a la visita técnica.</p>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16" aria-label="Herramientas técnicas">
+      <a routerLink="/quote-tool" class="help-action border-sky-300/30 bg-sky-400/10 hover:bg-sky-400/20">
+        <span class="material-symbols-outlined text-3xl text-sky-300" aria-hidden="true">calculate</span>
+        <span><strong>Calculadora de BTU</strong><small>Estima la capacidad inicial</small></span>
+        <span class="material-symbols-outlined ml-auto" aria-hidden="true">arrow_forward</span>
+      </a>
+      <a routerLink="/diagnostico" class="help-action border-amber-300/30 bg-amber-400/10 hover:bg-amber-400/20">
+        <span class="material-symbols-outlined text-3xl text-amber-300" aria-hidden="true">health_and_safety</span>
+        <span><strong>Diagnóstico de fallas</strong><small>Identifica el siguiente paso</small></span>
+        <span class="material-symbols-outlined ml-auto" aria-hidden="true">arrow_forward</span>
+      </a>
+      <a routerLink="/booking" class="help-action border-emerald-300/30 bg-emerald-400/10 hover:bg-emerald-400/20">
+        <span class="material-symbols-outlined text-3xl text-emerald-300" aria-hidden="true">calendar_month</span>
+        <span><strong>Agendar visita</strong><small>Solicita revisión en sitio</small></span>
+        <span class="material-symbols-outlined ml-auto" aria-hidden="true">arrow_forward</span>
+      </a>
+    </section>
+
+    <section class="mb-16" aria-labelledby="guides-title">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div><p class="text-sky-300 text-sm font-bold uppercase tracking-wide mb-2">Consejos SMM</p><h2 id="guides-title" class="font-headline-lg text-headline-lg">Guías para tu equipo</h2></div>
+        <span class="hidden sm:block text-sm text-slate-300">Información orientativa</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (guide of guides; track guide.title) {
+          <article class="guide-card">
+            <button type="button" class="w-full text-left flex items-start gap-4" (click)="toggleGuide(guide.title)" [attr.aria-expanded]="openGuide() === guide.title">
+              <span class="w-11 h-11 rounded-xl bg-sky-400/15 text-sky-300 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined" aria-hidden="true">{{ guide.icon }}</span></span>
+              <span class="flex-1"><strong class="block text-white mb-1">{{ guide.title }}</strong><span class="text-sm text-slate-300 leading-relaxed">{{ guide.summary }}</span></span>
+              <span class="material-symbols-outlined text-slate-300" aria-hidden="true">{{ openGuide() === guide.title ? 'expand_less' : 'expand_more' }}</span>
+            </button>
+            @if (openGuide() === guide.title) {
+              <ul class="mt-5 pt-4 border-t border-white/10 space-y-3 text-sm text-slate-200">
+                @for (detail of guide.details; track detail) { <li class="flex gap-2"><span class="material-symbols-outlined text-sky-300 text-base" aria-hidden="true">check_circle</span>{{ detail }}</li> }
+              </ul>
+            }
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="checklist-card" aria-labelledby="checklist-title">
+      <div><p class="text-emerald-300 text-sm font-bold uppercase tracking-wide mb-2">Antes de contactarnos</p><h2 id="checklist-title" class="font-headline-md text-headline-md mb-3">Llega preparado a tu diagnóstico</h2><p class="text-slate-200 text-sm leading-relaxed max-w-xl">Estos datos ayudan a nuestro equipo a responder más rápido y llevar la herramienta adecuada.</p></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+        @for (item of checklist(); track item.label; let i = $index) {
+          <label class="check-item"><input type="checkbox" [checked]="item.checked" (change)="toggleChecklist(i)" /><span>{{ item.label }}</span></label>
+        }
+      </div>
+      <a routerLink="/booking" class="inline-flex items-center gap-2 mt-7 px-5 py-3 bg-emerald-300 text-emerald-950 rounded-lg font-bold hover:bg-emerald-200 transition-colors"><span class="material-symbols-outlined" aria-hidden="true">chat</span>Solicitar atención técnica</a>
+    </section>
+  </div>
+</main>

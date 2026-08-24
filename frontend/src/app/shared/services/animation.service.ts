@@ -15,6 +15,8 @@ export class AnimationService {
   private zone = inject(NgZone);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private lenis: Lenis | null = null;
+  private readonly lenisTicker = (time: number) => this.lenis?.raf(time * 1000);
+  private initialized = false;
 
   get reducedMotion(): boolean {
     return this.isBrowser && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -27,9 +29,10 @@ export class AnimationService {
 
   /** Inicializa GSAP + Lenis + ScrollTrigger. Llamar una sola vez desde el root. */
   init(): void {
-    if (!this.isBrowser || this.reducedMotion) return;
+    if (!this.isBrowser || this.reducedMotion || this.initialized) return;
 
     this.zone.runOutsideAngular(() => {
+      this.initialized = true;
       gsap.registerPlugin(ScrollTrigger);
 
       this.lenis = new Lenis({
@@ -39,7 +42,7 @@ export class AnimationService {
       });
 
       // Sincroniza Lenis con el ticker de GSAP
-      gsap.ticker.add((time) => this.lenis?.raf(time * 1000));
+      gsap.ticker.add(this.lenisTicker);
       gsap.ticker.lagSmoothing(0);
 
       this.lenis.on('scroll', ScrollTrigger.update);
@@ -83,6 +86,9 @@ export class AnimationService {
   }
 
   ngOnDestroy(): void {
+    gsap.ticker.remove(this.lenisTicker);
     this.lenis?.destroy();
+    this.lenis = null;
+    this.initialized = false;
   }
 }

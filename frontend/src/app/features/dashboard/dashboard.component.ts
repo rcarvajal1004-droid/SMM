@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SmmApiService } from '../../core/services/smm-api.service';
+import { SmmApiService } from '../smm/data-access/smm-api.service';
 
 @Component({
   selector: 'app-dashboard',

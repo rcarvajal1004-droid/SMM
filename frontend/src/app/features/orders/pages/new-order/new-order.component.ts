@@ -1,8 +1,8 @@
 ﻿import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SmmApiService } from '../../../../core/services/smm-api.service';
-import { SmmService } from '../../../../core/models/smm.model';
+import { SmmApiService } from '../../../smm/data-access/smm-api.service';
+import { SmmService } from '../../../smm/models/smm.model';
 import { selectedService, quantity, totalCost, hasEnoughBalance, quantityIsValid } from '../../data-access/order-calculator.store';
 import { SmartLinkDirective, DetectedPlatform } from '../../../../shared/directives/smart-link.directive';
 import { ToastService } from '../../../../core/services/toast.service';

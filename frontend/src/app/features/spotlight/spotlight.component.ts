@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SmmService } from '../../core/models/smm.model';
+import { SmmService } from '../smm/models/smm.model';
 
 @Component({
   selector: 'app-spotlight',

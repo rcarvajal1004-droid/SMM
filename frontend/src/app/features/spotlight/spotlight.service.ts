@@ -1,6 +1,6 @@
 ﻿import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SmmService } from '../../core/models/smm.model';
+import { SmmService } from '../smm/models/smm.model';
 
 @Injectable({ providedIn: 'root' })
 export class SpotlightService {

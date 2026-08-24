@@ -1,0 +1,83 @@
+.fixed {
+  position: fixed;
+}
+
+.navbar-shell {
+  min-height: 76px;
+  gap: 1.5rem;
+}
+
+.navbar-brand {
+  flex: 0 1 330px;
+  min-width: 0;
+}
+
+.navbar-brand a {
+  display: block;
+  line-height: 1.15;
+}
+
+.navbar-nav {
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: clamp(0.7rem, 1.4vw, 1.35rem);
+}
+
+.navbar-nav a {
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .navbar-shell > .hidden.md\:flex:last-child {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 768px) {
+  .navbar-shell {
+    gap: 0.75rem;
+    padding-inline: 1.25rem;
+  }
+
+  .navbar-brand {
+    flex-basis: 245px;
+  }
+
+  .navbar-nav {
+    gap: 0.55rem;
+  }
+
+  .navbar-nav a {
+    font-size: 0.82rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  .navbar-shell {
+    gap: 0.45rem;
+    padding-inline: 1rem;
+  }
+
+  .navbar-brand {
+    flex: 0 0 205px;
+    width: 205px;
+  }
+
+  .navbar-brand a {
+    font-size: 0.94rem;
+    overflow-wrap: anywhere;
+  }
+
+  .navbar-brand > div {
+    display: none !important;
+  }
+
+  .navbar-nav {
+    gap: 0.25rem;
+  }
+
+  .navbar-nav a {
+    padding-inline: 0.25rem;
+    font-size: 0.7rem;
+  }
+}

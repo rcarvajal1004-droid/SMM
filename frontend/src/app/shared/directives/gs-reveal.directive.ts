@@ -36,7 +36,8 @@ export class GsRevealDirective implements AfterViewInit, OnDestroy {
     const items = native.querySelectorAll('.reveal-item');
     const targets = items.length > 0 ? Array.from(items) : [native];
 
-    gsap.set(targets, { opacity: 0, y: 32, filter: 'blur(8px)' });
+    // Keep content readable if the observer is delayed or unavailable.
+    gsap.set(targets, { opacity: 1, y: 24 });
 
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -45,12 +46,11 @@ export class GsRevealDirective implements AfterViewInit, OnDestroy {
         gsap.to(targets, {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
           duration: 1,
           delay: typeof this.delay === 'string' ? parseFloat(this.delay) || 0 : this.delay,
           stagger: items.length > 0 ? this.gsRevealStagger : 0,
           ease: 'power3.out',
-          clearProps: 'transform,filter'
+          clearProps: 'transform'
         });
 
         this.observer?.unobserve(native);

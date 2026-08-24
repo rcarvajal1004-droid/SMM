@@ -1,0 +1,8 @@
+import crypto from 'node:crypto';
+
+export function requestId(req, res, next) {
+  const id = req.get('x-request-id') || crypto.randomUUID();
+  res.setHeader('x-request-id', id);
+  req.requestId = id;
+  next();
+}

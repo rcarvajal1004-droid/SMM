@@ -1,0 +1,26 @@
+.help-action,
+.guide-card,
+.checklist-card {
+  border: 1px solid;
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.help-action {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: inherit;
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.help-action:hover { transform: translateY(-3px); }
+.help-action strong { display: block; font-size: 0.95rem; }
+.help-action small { display: block; color: #cbd5e1; margin-top: 0.25rem; }
+.guide-card { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.14); }
+.guide-card button { min-height: 4rem; }
+.checklist-card { background: rgba(16, 185, 129, 0.09); border-color: rgba(110, 231, 183, 0.3); }
+.check-item { display: flex; align-items: center; gap: 0.75rem; color: #e2e8f0; font-size: 0.95rem; cursor: pointer; }
+.check-item input { width: 1.1rem; height: 1.1rem; accent-color: #6ee7b7; }
+
+@media (prefers-reduced-motion: reduce) { .help-action:hover { transform: none; } }

@@ -1,5 +1,5 @@
 import { signal, computed } from '@angular/core';
-import { SmmService } from '../../../core/models/smm.model';
+import { SmmService } from '../../smm/models/smm.model';
 
 export const selectedService = signal<SmmService | null>(null);
 export const quantity = signal<number>(0);

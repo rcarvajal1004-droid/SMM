@@ -1,6 +1,4 @@
 ﻿import { Router } from 'express';
-import { SmmService } from '../models/index.js';
-
 const router = Router();
 
 let services = [
