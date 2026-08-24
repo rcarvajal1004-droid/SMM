@@ -1,173 +1,213 @@
-<main class="flex-grow pt-32 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full bg-surface text-on-surface">
+<main class="flex-grow pt-32 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full bg-surface dark:bg-background text-on-surface transition-colors duration-300">
   <!-- Hero Section -->
-  <section class="mb-16">
-    <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">Servicios de Climatización</h1>
+  <section class="mb-12">
+    <div class="inline-block px-3 py-1 bg-primary/10 rounded-full text-primary font-label-md text-xs font-semibold mb-3 border border-primary/20">
+      Tecnología Térmica Avanzada
+    </div>
+    <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary dark:text-primary-fixed mb-4">Servicios de Climatización</h1>
     <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
       Soluciones de aire acondicionado de alta eficiencia para espacios residenciales y comerciales. Venta, instalación y mantenimiento profesional garantizado.
     </p>
   </section>
+
+  <!-- Interactive Inverter Energy Savings Simulator -->
+  <section class="mb-16 glass-panel rounded-3xl p-6 md:p-8 border border-primary/20 shadow-xl relative overflow-hidden bg-surface-container-lowest">
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+      <div class="lg:col-span-6">
+        <div class="flex items-center gap-2 text-primary mb-2">
+          <span class="material-symbols-outlined">energy_savings_leaf</span>
+          <span class="font-label-md text-sm font-bold uppercase tracking-wider">Simulador de Ahorro Inverter</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">¿Cuánto ahorras al cambiarte a Inverter?</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6">
+          Ajusta las horas promedio de uso diario para calcular tu ahorro estimado frente a equipos convencionales.
+        </p>
+
+        <!-- Slider Control -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center font-label-md text-sm text-on-surface">
+            <span>Horas de uso al día:</span>
+            <span class="text-primary font-bold text-base px-3 py-0.5 bg-primary/10 rounded-lg">{{ dailyHours }} horas/día</span>
+          </div>
+          <input 
+            type="range" 
+            min="1" 
+            max="24" 
+            [(ngModel)]="dailyHours"
+            class="w-full cursor-pointer accent-primary" 
+          />
+          <div class="flex justify-between text-xs text-outline">
+            <span>1 h (Mínimo)</span>
+            <span>12 h</span>
+            <span>24 h (Continuo)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Savings Display -->
+      <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-surface rounded-2xl p-5 border border-primary/20 text-center shadow-md tilt-card">
+          <span class="material-symbols-outlined text-primary text-2xl mb-1">bolt</span>
+          <p class="font-headline-md text-headline-md text-primary font-bold leading-tight">{{ annualKwhSaved | number }}</p>
+          <span class="text-xs text-on-surface-variant font-medium">kWh Ahorrados / año</span>
+        </div>
+
+        <div class="bg-emerald-500/10 dark:bg-emerald-500/20 rounded-2xl p-5 border border-emerald-500/30 text-center shadow-md tilt-card">
+          <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-2xl mb-1">payments</span>
+          <p class="font-headline-md text-headline-md text-emerald-600 dark:text-emerald-400 font-bold leading-tight">${{ annualMoneySaved | number }}</p>
+          <span class="text-xs text-emerald-800 dark:text-emerald-300 font-medium">Ahorro Estimado / año</span>
+        </div>
+
+        <div class="bg-surface rounded-2xl p-5 border border-outline-variant/40 text-center shadow-md tilt-card">
+          <span class="material-symbols-outlined text-teal-500 text-2xl mb-1">forest</span>
+          <p class="font-headline-md text-headline-md text-on-surface font-bold leading-tight">{{ co2SavedKg | number }} kg</p>
+          <span class="text-xs text-on-surface-variant font-medium">Menos CO₂ al ambiente</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Filters & Tabs -->
   <section class="mb-12 flex flex-col sm:flex-row gap-4 items-center justify-between">
-    <div class="flex bg-surface-container-high p-1 rounded-lg">
-      <button class="px-6 py-2 rounded-md bg-surface text-primary font-label-md text-label-md shadow-sm">Residencial</button>
-      <button class="px-6 py-2 rounded-md text-on-surface-variant hover:text-primary font-label-md text-label-md transition-colors">Comercial</button>
+    <div class="flex bg-surface-container-high dark:bg-surface-container p-1 rounded-xl shadow-inner">
+      <button 
+        (click)="selectCategory('residencial')" 
+        [class.bg-surface]="selectedCategory === 'residencial'" 
+        [class.text-primary]="selectedCategory === 'residencial'" 
+        [class.shadow-md]="selectedCategory === 'residencial'" 
+        [class.text-on-surface-variant]="selectedCategory !== 'residencial'" 
+        class="px-6 py-2 rounded-lg font-label-md text-label-md font-medium transition-all active:scale-95"
+      >
+        Residencial
+      </button>
+      <button 
+        (click)="selectCategory('comercial')" 
+        [class.bg-surface]="selectedCategory === 'comercial'" 
+        [class.text-primary]="selectedCategory === 'comercial'" 
+        [class.shadow-md]="selectedCategory === 'comercial'" 
+        [class.text-on-surface-variant]="selectedCategory !== 'comercial'" 
+        class="px-6 py-2 rounded-lg font-label-md text-label-md font-medium transition-all active:scale-95"
+      >
+        Comercial
+      </button>
     </div>
     <div class="relative w-full sm:w-auto">
       <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-      <input class="w-full sm:w-64 pl-10 pr-4 py-2 bg-surface-container rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md text-body-md" placeholder="Buscar equipos..." type="text"/>
+      <input 
+        [(ngModel)]="searchTerm" 
+        class="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-surface-container dark:bg-surface-container-low rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-body-md text-body-md shadow-sm" 
+        placeholder="Buscar por modelo o BTU..." 
+        type="text"
+      />
     </div>
   </section>
+
   <!-- Product Grid -->
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-    <article class="bg-surface-container-lowest rounded-2xl border border-surface-variant overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-transform duration-300 flex flex-col">
-      <div class="h-48 w-full relative bg-surface-container flex items-center justify-center p-4">
-        <img class="w-full h-full object-contain" alt="Minisplit inverter EcoCool Series" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXLZ3uOuR81NLyZwHEQ_cB24JLl3fl9kqBb19rslXaeFlec0uT0dON_1qU9VD4o8EhLc9QoIHs0rbCp169uvGiHRvvQVP5PPP0kxlGy4B77MgmWMOVWWWSJ0HsiZonD0geqkwubfQDc6EmLO1gtvUDsp4I61ep2lBGdLrSC53iHtkCi8GMxNmrbRexoeHbL_xtuBOyDez0DckNt4Rp8aVqypcBOIHdXXHPAUj-TFaGEcG-vgKIIE-p"/>
-        <div class="absolute top-4 right-4 bg-primary/10 text-primary px-3 py-1 rounded-full font-label-md text-label-md border border-primary/20 backdrop-blur-md">
-          Inverter
-        </div>
-      </div>
-      <div class="p-6 flex-grow flex flex-col">
-        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">EcoCool Series 12K</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
-          Minisplit Inverter de alta eficiencia. Ideal para recámaras y espacios medianos. Ahorro de energía de hasta 60%.
-        </p>
-        <div class="bg-surface-container-low rounded-lg p-3 mb-6">
-          <div class="grid grid-cols-2 gap-2 text-sm">
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
-              <span class="font-body-md text-body-md text-on-surface">12,000 BTU</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">bolt</span>
-              <span class="font-body-md text-body-md text-on-surface">220V</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">energy_savings_leaf</span>
-              <span class="font-body-md text-body-md text-on-surface">SEER 18</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">volume_mute</span>
-              <span class="font-body-md text-body-md text-on-surface">Ultra Silencioso</span>
-            </div>
+    @for (product of filteredProducts; track product.id) {
+      <article 
+        #card
+        (mousemove)="onMouseMove($event, card)"
+        class="bg-surface-container-lowest rounded-2xl border border-surface-variant dark:border-outline-variant/30 overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.08)] hover:-translate-y-2 transition-all duration-300 flex flex-col tilt-card spotlight-card group"
+      >
+        <div class="h-48 w-full relative bg-surface-container dark:bg-surface-container-high flex items-center justify-center p-4 overflow-hidden">
+          <img 
+            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" 
+            [alt]="product.name" 
+            [src]="product.image"
+          />
+          <div 
+            class="absolute top-4 right-4 px-3 py-1 rounded-full font-label-md text-label-md backdrop-blur-md shadow-sm"
+            [ngClass]="product.badgeType === 'tertiary' ? 'bg-tertiary-container/20 text-tertiary border border-tertiary/30' : 'bg-primary/20 text-primary dark:text-primary-fixed border border-primary/30'"
+          >
+            {{ product.badge }}
           </div>
         </div>
-        <div class="flex gap-2 mt-auto">
-          <a routerLink="/quote-tool" class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors border-b-2 border-primary-fixed-dim text-center">Cotizar</a>
-          <button class="p-3 bg-surface-container text-primary rounded-lg border border-outline-variant hover:border-primary transition-colors">
-            <span class="material-symbols-outlined">info</span>
-          </button>
-        </div>
-      </div>
-    </article>
-    <article class="bg-surface-container-lowest rounded-2xl border border-surface-variant overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-transform duration-300 flex flex-col">
-      <div class="h-48 w-full relative bg-surface-container flex items-center justify-center p-4">
-        <img class="w-full h-full object-contain" alt="Sistema multi-zona ProTech DualZone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzDAi0be-x0aWP6IomdkERS3UKvD7Ha2NBPO5zQZNaxgyyuIfiBliQxkTLdr14N58lQ1t1tWM-OvqStVkyoc8hhjxLXJTp_SwuK63UcYQsqachSHc61UWr7JAFSyotyzeHvgpfXfZo_En-zCBjpbef88MMUM1U682AUuEu-Ksqw_cndJXTwui5vjTajG6j9ch77YEySWZBH--ayNk7jEpJVCz1E_NpRxnTaORJMgf25Y86wWSwZrRs"/>
-        <div class="absolute top-4 right-4 bg-primary/10 text-primary px-3 py-1 rounded-full font-label-md text-label-md border border-primary/20 backdrop-blur-md">
-          Multi-Zone
-        </div>
-      </div>
-      <div class="p-6 flex-grow flex flex-col">
-        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">ProTech DualZone 24K</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
-          Sistema multi-zona para enfriar dos áreas independientes con una sola unidad condensadora exterior.
-        </p>
-        <div class="bg-surface-container-low rounded-lg p-3 mb-6">
-          <div class="grid grid-cols-2 gap-2 text-sm">
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
-              <span class="font-body-md text-body-md text-on-surface">24,000 BTU</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">bolt</span>
-              <span class="font-body-md text-body-md text-on-surface">220V</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">energy_savings_leaf</span>
-              <span class="font-body-md text-body-md text-on-surface">SEER 21</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">wifi</span>
-              <span class="font-body-md text-body-md text-on-surface">Smart Control</span>
+
+        <div class="p-6 flex-grow flex flex-col">
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-2 font-bold">{{ product.name }}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
+            {{ product.description }}
+          </p>
+
+          <div class="bg-surface-container-low dark:bg-surface-container rounded-xl p-3 mb-6 border border-outline-variant/20">
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
+                <span class="font-body-md text-body-md text-on-surface">{{ product.btu }}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-sm">bolt</span>
+                <span class="font-body-md text-body-md text-on-surface">{{ product.voltage }}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-sm">energy_savings_leaf</span>
+                <span class="font-body-md text-body-md text-on-surface">{{ product.seer }}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-sm">{{ product.featureIcon }}</span>
+                <span class="font-body-md text-body-md text-on-surface">{{ product.feature }}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="flex gap-2 mt-auto">
-          <a routerLink="/quote-tool" class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors border-b-2 border-primary-fixed-dim text-center">Cotizar</a>
-          <button class="p-3 bg-surface-container text-primary rounded-lg border border-outline-variant hover:border-primary transition-colors">
-            <span class="material-symbols-outlined">info</span>
-          </button>
-        </div>
-      </div>
-    </article>
-    <article class="bg-surface-container-lowest rounded-2xl border border-surface-variant overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-transform duration-300 flex flex-col">
-      <div class="h-48 w-full relative bg-surface-container flex items-center justify-center p-4">
-        <img class="w-full h-full object-contain" alt="Minisplit estándar BaseLine 18K" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_9PTpPT-CdPuwAbfsLJaw-UTozF4KKxVkc864_jWuAOOzzEf_8zNKBK3aJZWzJdEt2BVruWZvGq9hDuuE-_xOmznzExmmqNXZCT7QzdWecSD02VNa0biAyk4BdWY0_bDHDImyL4nfWAUkK3vTlQFyaJ6wHLKPTwAxsc1lM9bAZX-Jp5WzVIdzBXgQl5ovxZnR7Gf4H5UGnjoIMQKce6btaCB6maMH0jsQrFNhYw2oZBhJ7tpmPM9g"/>
-        <div class="absolute top-4 right-4 bg-tertiary-container/10 text-tertiary px-3 py-1 rounded-full font-label-md text-label-md border border-tertiary/20 backdrop-blur-md">
-          Standard
-        </div>
-      </div>
-      <div class="p-6 flex-grow flex flex-col">
-        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">BaseLine 18K</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
-          Minisplit estándar confiable y duradero. Excelente relación costo-beneficio para enfriamiento rápido.
-        </p>
-        <div class="bg-surface-container-low rounded-lg p-3 mb-6">
-          <div class="grid grid-cols-2 gap-2 text-sm">
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
-              <span class="font-body-md text-body-md text-on-surface">18,000 BTU</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">bolt</span>
-              <span class="font-body-md text-body-md text-on-surface">110V / 220V</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">timer</span>
-              <span class="font-body-md text-body-md text-on-surface">Turbo Mode</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-primary text-sm">filter_alt</span>
-              <span class="font-body-md text-body-md text-on-surface">Filtro HEPA</span>
-            </div>
+
+          <div class="flex gap-2 mt-auto">
+            <a routerLink="/quote-tool" class="flex-1 bg-primary text-on-primary py-3 rounded-xl font-label-md text-label-md hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all border-b-2 border-primary-fixed-dim text-center font-bold active:scale-95">
+              Cotizar
+            </a>
+            <button 
+              (click)="showInfoToast(product.name)"
+              class="p-3 bg-surface-container hover:bg-surface-container-high text-primary rounded-xl border border-outline-variant hover:border-primary transition-all active:scale-90"
+              aria-label="Más información"
+            >
+              <span class="material-symbols-outlined">info</span>
+            </button>
           </div>
         </div>
-        <div class="flex gap-2 mt-auto">
-          <a routerLink="/quote-tool" class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors border-b-2 border-primary-fixed-dim text-center">Cotizar</a>
-          <button class="p-3 bg-surface-container text-primary rounded-lg border border-outline-variant hover:border-primary transition-colors">
-            <span class="material-symbols-outlined">info</span>
-          </button>
-        </div>
-      </div>
-    </article>
+      </article>
+    }
   </section>
+
+  @if (filteredProducts.length === 0) {
+    <div class="text-center py-16 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 mt-6">
+      <span class="material-symbols-outlined text-5xl text-outline mb-2">search_off</span>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-1">No encontramos equipos con "{{ searchTerm }}"</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-4">Intenta buscar por otro término o restablece el filtro.</p>
+      <button (click)="searchTerm = ''" class="px-6 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md">
+        Limpiar Búsqueda
+      </button>
+    </div>
+  }
+
   <!-- Services Section (Instalación & Mantenimiento) -->
   <section class="mt-20">
-    <h2 class="font-headline-md text-headline-md text-primary mb-8 border-b border-outline-variant/30 pb-4">Servicios Especializados</h2>
+    <h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed mb-8 border-b border-outline-variant/30 pb-4 font-bold">Servicios Especializados</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-      <div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant flex gap-6">
-        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+      <div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant dark:border-outline-variant/30 flex gap-6 tilt-card group">
+        <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform">
           <span class="material-symbols-outlined text-primary text-3xl">build</span>
         </div>
         <div>
-          <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Instalación Profesional</h3>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-2 font-bold">Instalación Profesional</h3>
           <p class="font-body-md text-body-md text-on-surface-variant mb-4">
             Instalación técnica certificada de equipos residenciales y comerciales. Incluye tubería, cableado y pruebas de presión para garantizar el máximo rendimiento.
           </p>
-          <a routerLink="/booking" class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1">
+          <a routerLink="/booking" class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1 font-bold">
             Agendar Instalación <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </a>
         </div>
       </div>
-      <div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant flex gap-6">
-        <div class="w-16 h-16 rounded-full bg-tertiary-container/10 flex items-center justify-center flex-shrink-0">
+      <div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant dark:border-outline-variant/30 flex gap-6 tilt-card group">
+        <div class="w-16 h-16 rounded-2xl bg-tertiary-container/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform">
           <span class="material-symbols-outlined text-tertiary-container text-3xl">handyman</span>
         </div>
         <div>
-          <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Mantenimiento Preventivo</h3>
+          <h3 class="font-headline-md text-headline-md text-on-surface mb-2 font-bold">Mantenimiento Preventivo</h3>
           <p class="font-body-md text-body-md text-on-surface-variant mb-4">
             Limpieza profunda, revisión de presiones de gas, ajustes eléctricos y sanitización de serpentines. Prolonga la vida útil de tus equipos.
           </p>
-          <a routerLink="/booking" class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1">
+          <a routerLink="/booking" class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1 font-bold">
             Solicitar Mantenimiento <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </a>
         </div>
@@ -175,3 +215,4 @@
     </div>
   </section>
 </main>
+

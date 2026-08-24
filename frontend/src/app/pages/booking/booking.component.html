@@ -1,154 +1,155 @@
 <main class="flex-grow pt-[100px] pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
   <!-- Header Section -->
   <div class="mb-12 text-center md:text-left">
-    <h1 class="font-display-lg text-display-lg text-on-surface mb-4">Agenda tu Servicio</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Selecciona fecha, hora y técnico disponible. Nuestro equipo confirmará tu cita en minutos.</p>
+    <h1 class="font-display-lg text-display-lg text-on-surface mb-4">Schedule Your Service</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Select a preferred date and time, and tell us a bit about the issue. Our certified technicians will confirm your appointment shortly.</p>
   </div>
+
   <!-- Booking Flow Container -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
-    <!-- Left Column: Calendar & Form (8 cols) -->
+    <!-- Left Column: Form & Details (8 cols) -->
     <div class="lg:col-span-8 flex flex-col gap-8">
       <!-- Progress Bar -->
       <div class="glass-panel rounded-2xl p-6">
         <div class="flex justify-between font-label-md text-label-md text-on-surface-variant mb-2">
-          <span>Paso 1: Detalles</span>
-          <span>Paso 2: Fecha y Hora</span>
+          <span>Step 1: Details</span>
+          <span>Step 2: Date &amp; Time</span>
         </div>
         <div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
           <div class="h-full w-1/2 gradient-track rounded-full"></div>
         </div>
       </div>
-      <!-- Service Type Selection -->
+
+      <!-- Form Card -->
       <div class="glass-panel rounded-2xl p-8">
-        <h2 class="font-headline-md text-headline-md text-on-surface mb-6">¿Qué servicio necesitas?</h2>
-        <div class="flex flex-wrap gap-4 mb-6">
-          <label class="cursor-pointer">
-            <input checked class="peer sr-only" name="service_type" type="radio" value="hvac"/>
-            <div class="px-6 py-3 rounded-full border border-outline-variant peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:text-primary transition-all flex items-center gap-2">
-              <span class="material-symbols-outlined">ac_unit</span>
-              <span class="font-label-md text-label-md">Climatización</span>
-            </div>
-          </label>
-          <label class="cursor-pointer">
-            <input class="peer sr-only" name="service_type" type="radio" value="electrical"/>
-            <div class="px-6 py-3 rounded-full border border-outline-variant peer-checked:bg-secondary/10 peer-checked:border-secondary peer-checked:text-secondary transition-all flex items-center gap-2">
-              <span class="material-symbols-outlined">bolt</span>
-              <span class="font-label-md text-label-md">Electricidad</span>
-            </div>
-          </label>
-          <label class="cursor-pointer">
-            <input class="peer sr-only" name="service_type" type="radio" value="maintenance"/>
-            <div class="px-6 py-3 rounded-full border border-outline-variant peer-checked:bg-tertiary/10 peer-checked:border-tertiary peer-checked:text-tertiary transition-all flex items-center gap-2">
-              <span class="material-symbols-outlined">handyman</span>
-              <span class="font-label-md text-label-md">Mantenimiento</span>
-            </div>
-          </label>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-6">Service Details</h2>
+        <form class="flex flex-col gap-6" (submit)="$event.preventDefault()">
+          <!-- Service Type Selection (Chips) -->
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1" for="name">Nombre Completo</label>
-            <input class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md" id="name" placeholder="Juan Pérez" type="text"/>
+            <label class="block font-label-md text-label-md text-on-surface mb-3">What kind of service do you need?</label>
+            <div class="flex flex-wrap gap-4">
+              <label class="cursor-pointer" (click)="selectServiceType('hvac')">
+                <input type="radio" name="service_type" value="hvac" [checked]="serviceType === 'hvac'" class="sr-only"/>
+                <div class="px-6 py-3 rounded-full border transition-all flex items-center gap-2" [ngClass]="serviceType === 'hvac' ? 'bg-primary/10 border-primary text-primary font-bold' : 'border-outline-variant hover:border-primary/50 text-on-surface'">
+                  <span class="material-symbols-outlined">ac_unit</span>
+                  <span class="font-label-md text-label-md">HVAC Repair</span>
+                </div>
+              </label>
+
+              <label class="cursor-pointer" (click)="selectServiceType('electrical')">
+                <input type="radio" name="service_type" value="electrical" [checked]="serviceType === 'electrical'" class="sr-only"/>
+                <div class="px-6 py-3 rounded-full border transition-all flex items-center gap-2" [ngClass]="serviceType === 'electrical' ? 'bg-tertiary-container/10 border-tertiary-container text-tertiary-container font-bold' : 'border-outline-variant hover:border-tertiary-container/50 text-on-surface'">
+                  <span class="material-symbols-outlined">bolt</span>
+                  <span class="font-label-md text-label-md">Electrical Issue</span>
+                </div>
+              </label>
+
+              <label class="cursor-pointer" (click)="selectServiceType('maintenance')">
+                <input type="radio" name="service_type" value="maintenance" [checked]="serviceType === 'maintenance'" class="sr-only"/>
+                <div class="px-6 py-3 rounded-full border transition-all flex items-center gap-2" [ngClass]="serviceType === 'maintenance' ? 'bg-primary/10 border-primary text-primary font-bold' : 'border-outline-variant hover:border-primary/50 text-on-surface'">
+                  <span class="material-symbols-outlined">settings</span>
+                  <span class="font-label-md text-label-md">Maintenance</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Contact Inputs -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-label-md text-label-md text-on-surface mb-1" for="name">Full Name</label>
+              <input [(ngModel)]="fullName" class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md outline-none transition-colors" id="name" name="name" placeholder="John Doe" type="text"/>
+            </div>
+            <div>
+              <label class="block font-label-md text-label-md text-on-surface mb-1" for="phone">Phone Number</label>
+              <input [(ngModel)]="phone" class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md outline-none transition-colors" id="phone" name="phone" placeholder="(555) 123-4567" type="tel"/>
+            </div>
           </div>
           <div>
-            <label class="block font-label-md text-label-md text-on-surface mb-1" for="phone">Teléfono</label>
-            <input class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md" id="phone" placeholder="(555) 123-4567" type="tel"/>
+            <label class="block font-label-md text-label-md text-on-surface mb-1" for="address">Service Address</label>
+            <input [(ngModel)]="address" class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md outline-none transition-colors" id="address" name="address" placeholder="123 Tech Lane, City" type="text"/>
           </div>
-        </div>
-        <div class="mt-6">
-          <label class="block font-label-md text-label-md text-on-surface mb-1" for="address">Dirección del Servicio</label>
-          <input class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md" id="address" placeholder="Av. Principal 123, Ciudad" type="text"/>
-        </div>
-        <div class="mt-6">
-          <label class="block font-label-md text-label-md text-on-surface mb-1" for="issue">Describe el problema (opcional)</label>
-          <textarea class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md" id="issue" placeholder="Ej: El aire acondicionado no enfría..." rows="3"></textarea>
-        </div>
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface mb-1" for="issue">Describe the Issue (Optional)</label>
+            <textarea [(ngModel)]="issueDescription" class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-surface/50 px-4 py-3 font-body-md text-body-md outline-none transition-colors resize-none" id="issue" name="issue" placeholder="E.g., AC not blowing cold air..." rows="3"></textarea>
+          </div>
+        </form>
       </div>
-      <!-- Calendar Widget -->
+    </div>
+
+    <!-- Right Column: Calendar & Action (4 cols) -->
+    <div class="lg:col-span-4 flex flex-col gap-8">
+      <!-- Interactive Calendar Widget -->
       <div class="glass-panel rounded-2xl p-6">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="font-headline-md text-headline-md text-on-surface">Selecciona la Fecha</h3>
-          <div class="flex gap-2 text-on-surface-variant">
-            <button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
-            <span class="font-label-md text-label-md">Octubre 2024</span>
-            <button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+          <h3 class="font-headline-md text-headline-md text-on-surface">Select Date</h3>
+          <div class="flex gap-2 text-on-surface-variant items-center">
+            <button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+            <span class="font-label-md text-label-md">October 2024</span>
+            <button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
           </div>
         </div>
+        <!-- Calendar Grid -->
         <div class="grid grid-cols-7 gap-1 text-center mb-4">
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Dom</div>
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Lun</div>
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Mar</div>
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Mié</div>
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Jue</div>
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Vie</div>
-          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">Sáb</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">S</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">M</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">T</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">W</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">T</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">F</div>
+          <div class="font-label-md text-label-md text-on-surface-variant/50 py-1">S</div>
+          <!-- Empty slots -->
           <div></div><div></div>
-          <button *ngFor="let day of days" class="py-2 rounded-lg transition-colors text-on-surface" [class.bg-primary]="day === selectedDate" [class.text-on-primary]="day === selectedDate" [class.font-bold]="day === selectedDate" [class.shadow-md]="day === selectedDate" (click)="selectDate(day)">{{ day }}</button>
+          <!-- Days 1 to 12 matching screenshot -->
+          <button (click)="selectDate(1)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 1 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">1</button>
+          <button (click)="selectDate(2)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 2 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">2</button>
+          <button (click)="selectDate(3)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 3 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">3</button>
+          <button (click)="selectDate(4)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 4 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">4</button>
+          <button (click)="selectDate(5)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 5 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">5</button>
+          <button (click)="selectDate(6)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 6 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">6</button>
+          <button (click)="selectDate(7)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 7 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">7</button>
+          <button (click)="selectDate(8)" class="py-2 rounded-lg transition-colors" [ngClass]="selectedDate === 8 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface hover:bg-surface-variant'">8</button>
+          <button (click)="selectDate(9)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 9 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">9</button>
+          <button (click)="selectDate(10)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 10 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">10</button>
+          <button (click)="selectDate(11)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 11 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">11</button>
+          <button (click)="selectDate(12)" class="py-2 rounded-lg hover:bg-surface-variant transition-colors" [ngClass]="selectedDate === 12 ? 'bg-primary text-on-primary font-bold shadow-md' : 'text-on-surface'">12</button>
         </div>
         <!-- Time Slots -->
         <div class="mt-6 border-t border-outline-variant/30 pt-4">
-          <h4 class="font-label-md text-label-md text-on-surface mb-3">Horarios Disponibles</h4>
+          <h4 class="font-label-md text-label-md text-on-surface mb-3">Available Times</h4>
           <div class="grid grid-cols-2 gap-2">
-            @for (slot of timeSlots; track slot.time) {
-              <button class="py-2 border rounded-lg font-label-md text-label-md transition-colors" [class.border-primary]="slot.time === selectedTime" [class.bg-primary/5]="slot.time === selectedTime" [class.text-primary]="slot.time === selectedTime" [class.font-bold]="slot.time === selectedTime" [class.shadow-sm]="slot.time === selectedTime" [class.opacity-50]="!slot.available" [class.cursor-not-allowed]="!slot.available" (click)="slot.available && selectTime(slot.time)">
-                {{ slot.time }}
-              </button>
-            }
+            <button (click)="selectTime('09:00 AM')" class="py-2 rounded-lg font-label-md text-label-md transition-colors" [ngClass]="selectedTime === '09:00 AM' ? 'border-2 border-primary bg-primary/5 text-primary font-bold shadow-sm' : 'border border-outline-variant text-on-surface hover:border-primary hover:text-primary'">09:00 AM</button>
+            <button (click)="selectTime('11:30 AM')" class="py-2 rounded-lg font-label-md text-label-md transition-colors" [ngClass]="selectedTime === '11:30 AM' ? 'border-2 border-primary bg-primary/5 text-primary font-bold shadow-sm' : 'border border-outline-variant text-on-surface hover:border-primary hover:text-primary'">11:30 AM</button>
+            <button (click)="selectTime('02:00 PM')" class="py-2 rounded-lg font-label-md text-label-md transition-colors" [ngClass]="selectedTime === '02:00 PM' ? 'border-2 border-primary bg-primary/5 text-primary font-bold shadow-sm' : 'border border-outline-variant text-on-surface hover:border-primary hover:text-primary'">02:00 PM</button>
+            <button class="py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface opacity-50 cursor-not-allowed">04:30 PM</button>
           </div>
         </div>
       </div>
-      <!-- Technician Selection -->
-      <div class="glass-panel rounded-2xl p-6">
-        <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Técnico Preferido</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          @for (tech of technicians; track tech.id) {
-            <button class="p-4 rounded-xl border text-left transition-all" [class.border-primary]="isSelectedTechnician(tech.id)" [class.bg-primary/5]="isSelectedTechnician(tech.id)" [class.border-outline-variant]="!isSelectedTechnician(tech.id)" [class.opacity-50]="!tech.available" [class.cursor-not-allowed]="!tech.available" (click)="tech.available && selectTechnician(tech.id)">
-              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mb-2">{{ tech.name.charAt(0) }}</div>
-              <p class="font-label-md text-label-md text-on-surface">{{ tech.name }}</p>
-              <p class="font-body-sm text-body-sm text-on-surface-variant">{{ tech.specialty }}</p>
-              @if (!tech.available) {
-                <span class="text-xs text-error mt-1">No disponible</span>
-              }
-            </button>
-          }
-        </div>
-      </div>
+
       <!-- Action Button -->
-      <button (click)="showModal()" class="w-full bg-primary text-on-primary py-4 rounded-lg font-label-md text-label-md font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 border-b-2 border-primary-fixed">
+      <button (click)="confirmBooking()" class="w-full bg-primary text-on-primary py-4 rounded-lg font-label-md text-label-md font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 border-b-2 border-primary-fixed">
         <span class="material-symbols-outlined">event_available</span>
-        Confirmar Cita
+        Confirm Appointment
       </button>
     </div>
-    <!-- Right Column: Summary (4 cols) -->
-    <div class="lg:col-span-4 flex flex-col gap-8">
-      <div class="glass-panel rounded-2xl p-6">
-        <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Resumen de la Cita</h3>
-        <div class="space-y-3 font-body-md text-body-md text-on-surface-variant">
-          <div class="flex justify-between"><span>Fecha:</span><span class="text-on-surface font-medium">Oct {{ selectedDate }}, 2024</span></div>
-          <div class="flex justify-between"><span>Hora:</span><span class="text-on-surface font-medium">{{ selectedTime }}</span></div>
-          <div class="flex justify-between"><span>Técnico:</span><span class="text-on-surface font-medium">{{ getSelectedTechnicianName() }}</span></div>
-        </div>
-      </div>
-      <div class="bg-error/10 border border-error/20 rounded-2xl p-6">
-        <div class="flex items-center gap-2 mb-2">
-          <span class="material-symbols-outlined text-error">warning</span>
-          <span class="font-label-md text-label-md text-error">Emergencia 24/7</span>
-        </div>
-        <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">¿Necesitas ayuda inmediata? Llámanos ahora.</p>
-        <a href="tel:+8001234567" class="text-error font-label-md text-label-md hover:underline">(800) 123-4567</a>
-      </div>
-    </div>
   </div>
+
   <!-- Success Modal -->
-  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-inverse-surface/80 backdrop-blur-sm p-4" *ngIf="successModalVisible">
+  <div *ngIf="successModalVisible" class="fixed inset-0 z-[100] flex items-center justify-center bg-inverse-surface/80 backdrop-blur-sm p-4">
     <div class="glass-panel bg-surface rounded-2xl max-w-md w-full p-8 text-center animate-fade-in-up shadow-2xl">
       <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
         <span class="material-symbols-outlined text-4xl text-primary">check_circle</span>
       </div>
-      <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">¡Cita Confirmada!</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant mb-6">Tu cita para el {{ selectedDate }} de octubre a las {{ selectedTime }} ha sido agendada correctamente.</p>
-      <button class="w-full bg-surface-variant text-on-surface py-3 rounded-lg font-label-md text-label-md hover:bg-surface-dim transition-colors" (click)="hideModal()">
-        Cerrar
+      <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Booking Confirmed!</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-6">Your appointment for {{ getServiceName() }} is scheduled for Oct {{ selectedDate }}, 2024 at {{ selectedTime }}.</p>
+      <div class="bg-surface-container rounded-lg p-4 mb-6 text-left border border-outline-variant/30">
+        <div class="font-label-md text-label-md text-on-surface mb-1">{{ fullName || 'John Doe' }}</div>
+        <div class="font-body-md text-body-md text-on-surface-variant text-sm">{{ address || '123 Tech Lane, City' }}</div>
+      </div>
+      <button (click)="closeModal()" class="w-full bg-surface-variant text-on-surface py-3 rounded-lg font-label-md text-label-md hover:bg-surface-dim transition-colors">
+        Close
       </button>
     </div>
   </div>
 </main>
+

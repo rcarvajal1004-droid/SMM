@@ -11,7 +11,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/landing/landing.component').then(m => m.LandingComponent)
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
       },
       {
         path: 'home',

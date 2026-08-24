@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClimaTech &amp; Electricidad - Servicios de Climatización</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#de8712",
+                        "tertiary-fixed": "#ffdcbd",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#bec8d2",
+                        "tertiary-fixed-dim": "#ffb86e",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#c9e6ff",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "primary-container": "#0ea5e9",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#2c1600",
+                        "primary": "#006591",
+                        "surface-tint": "#006591",
+                        "inverse-on-surface": "#eef0ff",
+                        "background": "#faf8ff",
+                        "secondary-fixed": "#ffddb8",
+                        "on-primary-fixed": "#001e2f",
+                        "primary-fixed-dim": "#89ceff",
+                        "surface-bright": "#faf8ff",
+                        "inverse-surface": "#283044",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f3ff",
+                        "on-secondary-fixed": "#2a1700",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "surface-dim": "#d2d9f4",
+                        "surface-container-high": "#e2e7ff",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "on-surface": "#131b2e",
+                        "on-primary-container": "#003751",
+                        "tertiary": "#8a5100",
+                        "secondary-container": "#fea619",
+                        "surface-container": "#eaedff",
+                        "surface": "#faf8ff",
+                        "surface-variant": "#dae2fd",
+                        "outline": "#6e7881",
+                        "on-background": "#131b2e",
+                        "on-primary-fixed-variant": "#004c6e",
+                        "surface-container-highest": "#dae2fd",
+                        "secondary": "#855300",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#4d2b00",
+                        "on-secondary-container": "#684000",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#3e4850",
+                        "inverse-primary": "#89ceff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "base": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-surface-container/80 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/20 dark:border-outline-variant/20 shadow-xl shadow-slate-900/10">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
+                ClimaTech &amp; Electricidad
+            </div>
+<nav class="hidden md:flex gap-gutter">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary dark:border-primary-fixed pb-1 font-label-md text-label-md" href="#">HVAC Services</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Electrical Services</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Quote Tool</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Booking</a>
+</nav>
+<button class="bg-primary text-on-primary font-label-md text-label-md py-2 px-4 rounded-lg hidden md:block hover:bg-primary/90 transition-colors shadow-sm">
+                24/7 Emergency
+            </button>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Hero Section -->
+<section class="mb-16">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">Servicios de Climatización</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+                Soluciones de aire acondicionado de alta eficiencia para espacios residenciales y comerciales. Venta, instalación y mantenimiento profesional garantizado.
+            </p>
+</section>
+<!-- Filters & Tabs -->
+<section class="mb-12 flex flex-col sm:flex-row gap-4 items-center justify-between">
+<div class="flex bg-surface-container-high p-1 rounded-lg">
+<button class="px-6 py-2 rounded-md bg-surface text-primary font-label-md text-label-md shadow-sm">Residencial</button>
+<button class="px-6 py-2 rounded-md text-on-surface-variant hover:text-primary font-label-md text-label-md transition-colors">Comercial</button>
+</div>
+<div class="relative w-full sm:w-auto">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full sm:w-64 pl-10 pr-4 py-2 bg-surface-container rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md text-body-md" placeholder="Buscar equipos..." type="text"/>
+</div>
+</section>
+<!-- Product Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Product Card 1 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-surface-variant overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+<div class="h-48 w-full relative bg-surface-container flex items-center justify-center p-4">
+<img class="w-full h-full object-contain" data-alt="A high-end, sleek modern mini-split air conditioning unit mounted on a pristine white wall in a brightly lit, minimalist residential living room. The lighting is cool, daylight balanced, emphasizing the clean lines and technological advanced nature of the HVAC system. The setting is clean, professional, and uncluttered, adhering to a modern corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXLZ3uOuR81NLyZwHEQ_cB24JLl3fl9kqBb19rslXaeFlec0uT0dON_1qU9VD4o8EhLc9QoIHs0rbCp169uvGiHRvvQVP5PPP0kxlGy4B77MgmWMOVWWWSJ0HsiZonD0geqkwubfQDc6EmLO1gtvUDsp4I61ep2lBGdLrSC53iHtkCi8GMxNmrbRexoeHbL_xtuBOyDez0DckNt4Rp8aVqypcBOIHdXXHPAUj-TFaGEcG-vgKIIE-p"/>
+<div class="absolute top-4 right-4 bg-primary/10 text-primary px-3 py-1 rounded-full font-label-md text-label-md border border-primary/20 backdrop-blur-md">
+                        Inverter
+                     </div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">EcoCool Series 12K</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
+                        Minisplit Inverter de alta eficiencia. Ideal para recámaras y espacios medianos. Ahorro de energía de hasta 60%.
+                    </p>
+<div class="bg-surface-container-low rounded-lg p-3 mb-6">
+<div class="grid grid-cols-2 gap-2 text-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
+<span class="font-body-md text-body-md text-on-surface">12,000 BTU</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+<span class="font-body-md text-body-md text-on-surface">220V</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">energy_savings_leaf</span>
+<span class="font-body-md text-body-md text-on-surface">SEER 18</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">volume_mute</span>
+<span class="font-body-md text-body-md text-on-surface">Ultra Silencioso</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors border-b-2 border-primary-fixed-dim">
+                            Cotizar
+                        </button>
+<button class="p-3 bg-surface-container text-primary rounded-lg border border-outline-variant hover:border-primary transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Product Card 2 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-surface-variant overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+<div class="h-48 w-full relative bg-surface-container flex items-center justify-center p-4">
+<img class="w-full h-full object-contain" data-alt="A premium dual-zone inverter air conditioning compressor unit situated outside a modern home. The lighting highlights the durable, weather-resistant metallic casing. The environment features subtle landscaping elements, communicating a clean, professional, and reliable cooling solution for residential properties." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzDAi0be-x0aWP6IomdkERS3UKvD7Ha2NBPO5zQZNaxgyyuIfiBliQxkTLdr14N58lQ1t1tWM-OvqStVkyoc8hhjxLXJTp_SwuK63UcYQsqachSHc61UWr7JAFSyotyzeHvgpfXfZo_En-zCBjpbef88MMUM1U682AUuEu-Ksqw_cndJXTwui5vjTajG6j9ch77YEySWZBH--ayNk7jEpJVCz1E_NpRxnTaORJMgf25Y86wWSwZrRs"/>
+<div class="absolute top-4 right-4 bg-primary/10 text-primary px-3 py-1 rounded-full font-label-md text-label-md border border-primary/20 backdrop-blur-md">
+                        Multi-Zone
+                     </div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">ProTech DualZone 24K</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
+                        Sistema multi-zona para enfriar dos áreas independientes con una sola unidad condensadora exterior.
+                    </p>
+<div class="bg-surface-container-low rounded-lg p-3 mb-6">
+<div class="grid grid-cols-2 gap-2 text-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
+<span class="font-body-md text-body-md text-on-surface">24,000 BTU</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+<span class="font-body-md text-body-md text-on-surface">220V</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">energy_savings_leaf</span>
+<span class="font-body-md text-body-md text-on-surface">SEER 21</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">wifi</span>
+<span class="font-body-md text-body-md text-on-surface">Smart Control</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors border-b-2 border-primary-fixed-dim">
+                            Cotizar
+                        </button>
+<button class="p-3 bg-surface-container text-primary rounded-lg border border-outline-variant hover:border-primary transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Product Card 3 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-surface-variant overflow-hidden shadow-[0_20px_25px_-5px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+<div class="h-48 w-full relative bg-surface-container flex items-center justify-center p-4">
+<img class="w-full h-full object-contain" data-alt="A compact, stylish residential HVAC unit installed in a contemporary home office space. Soft, natural light streams in from a nearby window, illuminating the smooth white finish of the air conditioner. The setting evokes a sense of calm, quiet efficiency, and modern technological integration in a residential context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_9PTpPT-CdPuwAbfsLJaw-UTozF4KKxVkc864_jWuAOOzzEf_8zNKBK3aJZWzJdEt2BVruWZvGq9hDuuE-_xOmznzExmmqNXZCT7QzdWecSD02VNa0biAyk4BdWY0_bDHDImyL4nfWAUkK3vTlQFyaJ6wHLKPTwAxsc1lM9bAZX-Jp5WzVIdzBXgQl5ovxZnR7Gf4H5UGnjoIMQKce6btaCB6maMH0jsQrFNhYw2oZBhJ7tpmPM9g"/>
+<div class="absolute top-4 right-4 bg-tertiary-container/10 text-tertiary px-3 py-1 rounded-full font-label-md text-label-md border border-tertiary/20 backdrop-blur-md">
+                        Standard
+                     </div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">BaseLine 18K</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">
+                        Minisplit estándar confiable y duradero. Excelente relación costo-beneficio para enfriamiento rápido.
+                    </p>
+<div class="bg-surface-container-low rounded-lg p-3 mb-6">
+<div class="grid grid-cols-2 gap-2 text-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">ac_unit</span>
+<span class="font-body-md text-body-md text-on-surface">18,000 BTU</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+<span class="font-body-md text-body-md text-on-surface">110V / 220V</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">timer</span>
+<span class="font-body-md text-body-md text-on-surface">Turbo Mode</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">filter_alt</span>
+<span class="font-body-md text-body-md text-on-surface">Filtro HEPA</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors border-b-2 border-primary-fixed-dim">
+                            Cotizar
+                        </button>
+<button class="p-3 bg-surface-container text-primary rounded-lg border border-outline-variant hover:border-primary transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+<!-- Services Section (Instalación & Mantenimiento) -->
+<section class="mt-20">
+<h2 class="font-headline-md text-headline-md text-primary mb-8 border-b border-outline-variant/30 pb-4">Servicios Especializados</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Instalación -->
+<div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant flex gap-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">build</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Instalación Profesional</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                            Instalación técnica certificada de equipos residenciales y comerciales. Incluye tubería, cableado y pruebas de presión para garantizar el máximo rendimiento.
+                        </p>
+<a class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1" href="#">
+                            Agendar Instalación <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Mantenimiento -->
+<div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant flex gap-6">
+<div class="w-16 h-16 rounded-full bg-tertiary-container/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary-container text-3xl">handyman</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Mantenimiento Preventivo</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                            Limpieza profunda, revisión de presiones de gas, ajustes eléctricos y sanitización de serpentines. Prolonga la vida útil de tus equipos.
+                        </p>
+<a class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1" href="#">
+                            Solicitar Mantenimiento <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest w-full mt-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-16 max-w-container-max mx-auto">
+<!-- Brand Column -->
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed dark:text-primary mb-4">
+                    ClimaTech &amp; Electricidad
+                </div>
+<p class="font-body-md text-body-md text-surface-variant dark:text-on-surface-variant mb-6">
+                    Experiencia y calidad en soluciones de climatización y servicios eléctricos.
+                </p>
+</div>
+<!-- Links -->
+<div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-4">
+<nav class="flex flex-col gap-3">
+<a class="font-label-md text-label-md text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed hover:opacity-80 transition-colors focus:ring-2 focus:ring-primary-fixed" href="#">HVAC Services</a>
+<a class="font-label-md text-label-md text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed hover:opacity-80 transition-colors focus:ring-2 focus:ring-primary-fixed" href="#">Electrical Services</a>
+<a class="font-label-md text-label-md text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed hover:opacity-80 transition-colors focus:ring-2 focus:ring-primary-fixed" href="#">Quote Tool</a>
+</nav>
+<nav class="flex flex-col gap-3">
+<a class="font-label-md text-label-md text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed hover:opacity-80 transition-colors focus:ring-2 focus:ring-primary-fixed" href="#">Emergency Support</a>
+<a class="font-label-md text-label-md text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed hover:opacity-80 transition-colors focus:ring-2 focus:ring-primary-fixed" href="#">Service Areas</a>
+<a class="font-label-md text-label-md text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed hover:opacity-80 transition-colors focus:ring-2 focus:ring-primary-fixed" href="#">Office Hours</a>
+</nav>
+</div>
+<!-- Copyright -->
+<div class="col-span-1 flex flex-col justify-end mt-8 md:mt-0">
+<p class="font-body-md text-body-md text-surface-variant dark:text-on-surface-variant text-sm">
+                    © 2024 ClimaTech &amp; Electricidad. All rights reserved.
+                </p>
+</div>
+</div>
+</footer>
+</body></html>

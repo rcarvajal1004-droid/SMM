@@ -1,159 +1,106 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-quote-tool',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './quote-tool.component.html',
   styleUrl: './quote-tool.component.css'
 })
 export class QuoteToolComponent {
-  currentStep = 1;
-  totalSteps = 3;
+  toastService = inject(ToastService);
 
-  btuValue = 0;
-  tonValue = 'Aprox. 0 Toneladas';
+  // BTU Calculator State
+  btuArea: number | null = 20;
+  btuPeople: number = 2;
+  btuSun: 'low' | 'normal' | 'high' = 'normal';
+  btuCalculated: number = 12000;
+  tonsCalculated: string = '1.0';
+
+  // Multi-step Quote State
+  currentStep: number = 1;
+  totalSteps: number = 3;
+  serviceType: 'hvac' | 'electric' = 'hvac';
+  propertyType: 'residencial' | 'comercial' | 'industrial' = 'residencial';
+  urgency: 'standard' | 'urgent' | 'planning' = 'standard';
+  description: string = '';
+
+  constructor() {
+    this.calculateBTU();
+  }
+
+  setQuickArea(area: number): void {
+    this.btuArea = area;
+    this.calculateBTU();
+    this.toastService.info(`Área ajustada a ${area} m²`, undefined, 1500);
+  }
 
   calculateBTU(): void {
-    const areaInput = document.getElementById('area') as HTMLInputElement;
-    const peopleInput = document.getElementById('people') as HTMLInputElement;
-    const sunSelect = document.getElementById('sun') as HTMLSelectElement;
-    const btuValueDisplay = document.getElementById('btuValue');
-    const tonValueDisplay = document.getElementById('tonValue');
-
-    if (!areaInput || !peopleInput || !sunSelect || !btuValueDisplay || !tonValueDisplay) return;
-
-    const area = parseFloat(areaInput.value) || 0;
-    let people = parseInt(peopleInput.value) || 1;
-    const sun = sunSelect.value;
-
-    if (area === 0) {
-      btuValueDisplay.textContent = '0';
-      tonValueDisplay.textContent = 'Aprox. 0 Toneladas';
+    const area = this.btuArea || 0;
+    if (area <= 0) {
+      this.btuCalculated = 0;
+      this.tonsCalculated = '0';
       return;
     }
 
     let btu = area * 600;
-    if (people > 2) {
-      btu += (people - 2) * 500;
+    if (this.btuPeople > 2) {
+      btu += (this.btuPeople - 2) * 500;
     }
-    if (sun === 'high') {
+    if (this.btuSun === 'high') {
       btu *= 1.15;
-    } else if (sun === 'low') {
+    } else if (this.btuSun === 'low') {
       btu *= 0.90;
     }
+
     btu = Math.ceil(btu / 500) * 500;
-    const tons = (btu / 12000).toFixed(1);
-    btuValueDisplay.textContent = btu.toLocaleString();
-    tonValueDisplay.textContent = `Aprox. ${tons} Toneladas`;
+    this.btuCalculated = btu;
+    this.tonsCalculated = (btu / 12000).toFixed(1);
   }
 
   nextStep(): void {
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
-      this.updateUI();
     }
   }
 
   prevStep(): void {
     if (this.currentStep > 1) {
       this.currentStep--;
-      this.updateUI();
     }
   }
 
+  getServiceLabel(): string {
+    return this.serviceType === 'hvac' ? 'Sistemas HVAC' : 'Servicios Eléctricos';
+  }
+
+  getUrgencyLabel(): string {
+    const urgencyMap: Record<string, string> = {
+      standard: 'Estándar',
+      urgent: 'Urgente',
+      planning: 'Planificación'
+    };
+    return urgencyMap[this.urgency] || 'Estándar';
+  }
+
   submitQuote(): void {
-    const summaryService = document.getElementById('summaryService');
-    const summaryProperty = document.getElementById('summaryProperty');
-    const summaryUrgency = document.getElementById('summaryUrgency');
-    const description = document.getElementById('description') as HTMLTextAreaElement;
-
-    const service = summaryService?.textContent || '';
-    const property = summaryProperty?.textContent || '';
-    const urgency = summaryUrgency?.textContent || '';
-    const desc = description?.value || '';
-
     let message = `Hola ClimaTech, me gustaría solicitar una cotización:\n\n`;
-    message += `*Servicio:* ${service}\n`;
-    message += `*Propiedad:* ${property}\n`;
-    message += `*Urgencia:* ${urgency}\n`;
-    if (desc) message += `*Detalles:* ${desc}\n`;
+    message += `*Servicio:* ${this.getServiceLabel()}\n`;
+    message += `*Propiedad:* ${this.propertyType.charAt(0).toUpperCase() + this.propertyType.slice(1)}\n`;
+    message += `*Urgencia:* ${this.getUrgencyLabel()}\n`;
+    if (this.description.trim()) {
+      message += `*Detalles:* ${this.description.trim()}\n`;
+    }
+
+    this.toastService.success('Cotización Generada', 'Redirigiendo a WhatsApp para conectar con un técnico...');
 
     const whatsappNumber = "1234567890";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   }
-
-  private updateUI(): void {
-    const progressBar = document.getElementById('progressBar');
-    const stepIndicatorText = document.getElementById('stepIndicatorText');
-    const btnPrev = document.getElementById('btnPrev');
-    const btnNext = document.getElementById('btnNext');
-    const btnSubmit = document.getElementById('btnSubmit');
-
-    if (progressBar) {
-      progressBar.style.width = `${(this.currentStep / this.totalSteps) * 100}%`;
-    }
-    if (stepIndicatorText) {
-      stepIndicatorText.textContent = `Paso ${this.currentStep} de ${this.totalSteps}`;
-    }
-
-    const label1 = document.getElementById('labelStep1');
-    const label2 = document.getElementById('labelStep2');
-    const label3 = document.getElementById('labelStep3');
-
-    if (label1) label1.className = this.currentStep >= 1 ? 'text-primary transition-colors' : 'text-outline transition-colors';
-    if (label2) label2.className = this.currentStep >= 2 ? 'text-primary transition-colors' : 'text-outline transition-colors';
-    if (label3) label3.className = this.currentStep >= 3 ? 'text-primary transition-colors' : 'text-outline transition-colors';
-
-    if (this.currentStep === 1) {
-      if (btnPrev) btnPrev.classList.add('hidden');
-      if (btnNext) btnNext.classList.remove('hidden');
-      if (btnSubmit) btnSubmit.classList.add('hidden');
-    } else if (this.currentStep === this.totalSteps) {
-      if (btnPrev) btnPrev.classList.remove('hidden');
-      if (btnNext) btnNext.classList.add('hidden');
-      if (btnSubmit) btnSubmit.classList.remove('hidden');
-      this.populateSummary();
-    } else {
-      if (btnPrev) btnPrev.classList.remove('hidden');
-      if (btnNext) btnNext.classList.remove('hidden');
-      if (btnSubmit) btnSubmit.classList.add('hidden');
-    }
-
-    const step1Div = document.getElementById('step1');
-    const step2Div = document.getElementById('step2');
-    const step3Div = document.getElementById('step3');
-
-    [step1Div, step2Div, step3Div].forEach((el, index) => {
-      if (index + 1 === this.currentStep) {
-        el?.classList.remove('hidden');
-        setTimeout(() => el?.classList.remove('opacity-0'), 50);
-      } else {
-        el?.classList.add('opacity-0');
-        setTimeout(() => el?.classList.add('hidden'), 300);
-      }
-    });
-  }
-
-  private populateSummary(): void {
-    const serviceType = document.querySelector('input[name="serviceType"]:checked') as HTMLInputElement;
-    const propertyType = document.querySelector('input[name="propertyType"]:checked') as HTMLInputElement;
-    const urgency = document.getElementById('urgency') as HTMLSelectElement;
-
-    const urgencyMap: { [key: string]: string } = {
-      'standard': 'Estándar',
-      'urgent': 'Urgente',
-      'planning': 'Planificación'
-    };
-
-    const summaryService = document.getElementById('summaryService');
-    const summaryProperty = document.getElementById('summaryProperty');
-    const summaryUrgency = document.getElementById('summaryUrgency');
-
-    if (summaryService) summaryService.textContent = serviceType?.value === 'hvac' ? 'Sistemas HVAC' : 'Servicios Eléctricos';
-    if (summaryProperty) summaryProperty.textContent = propertyType?.value || '';
-    if (summaryUrgency) summaryUrgency.textContent = urgencyMap[urgency?.value || ''] || urgency?.value || '';
-  }
 }
+
+

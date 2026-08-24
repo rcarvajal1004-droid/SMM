@@ -1,24 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-booking',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.css'
 })
 export class BookingComponent {
-  successModalVisible = false;
-  selectedDate = 8;
-  selectedTime = '11:30 AM';
-  selectedTechnician: string | null = null;
+  toastService = inject(ToastService);
 
-  readonly technicians = [
-    { id: 1, name: 'Carlos Méndez', specialty: 'HVAC', available: true },
-    { id: 2, name: 'Ana Ruiz', specialty: 'Electricidad', available: true },
-    { id: 3, name: 'Luis Torres', specialty: 'HVAC / Electricidad', available: false }
-  ];
+  serviceType: 'hvac' | 'electrical' | 'maintenance' = 'hvac';
+  fullName: string = '';
+  phone: string = '';
+  address: string = '';
+  issueDescription: string = '';
+
+  selectedDate: number = 8;
+  selectedTime: string = '11:30 AM';
+  successModalVisible: boolean = false;
 
   readonly timeSlots = [
     { time: '09:00 AM', available: true },
@@ -27,35 +30,36 @@ export class BookingComponent {
     { time: '04:30 PM', available: false }
   ];
 
-  readonly days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  selectServiceType(type: 'hvac' | 'electrical' | 'maintenance'): void {
+    this.serviceType = type;
+  }
 
   selectDate(day: number): void {
     this.selectedDate = day;
+    this.toastService.info(`Fecha seleccionada: ${day} de Octubre`, undefined, 1500);
   }
 
   selectTime(time: string): void {
     this.selectedTime = time;
+    this.toastService.info(`Horario seleccionado: ${time}`, undefined, 1500);
   }
 
-  selectTechnician(id: number): void {
-    this.selectedTechnician = this.selectedTechnician === String(id) ? null : String(id);
+  getServiceName(): string {
+    switch (this.serviceType) {
+      case 'hvac': return 'HVAC Repair';
+      case 'electrical': return 'Electrical Issue';
+      case 'maintenance': return 'Maintenance';
+      default: return 'HVAC Repair';
+    }
   }
 
-  isSelectedTechnician(id: number): boolean {
-    return this.selectedTechnician === String(id);
-  }
-
-  getSelectedTechnicianName(): string {
-    if (!this.selectedTechnician) return 'Sin seleccionar';
-    const tech = this.technicians.find(t => t.id === Number(this.selectedTechnician));
-    return tech?.name || 'Sin seleccionar';
-  }
-
-  showModal(): void {
+  confirmBooking(): void {
     this.successModalVisible = true;
+    this.toastService.success('¡Cita Confirmada con Éxito!', `Oct ${this.selectedDate}, 2024 a las ${this.selectedTime}`);
   }
 
-  hideModal(): void {
+  closeModal(): void {
     this.successModalVisible = false;
   }
 }
+
