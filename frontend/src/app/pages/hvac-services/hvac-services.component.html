@@ -180,8 +180,203 @@
     </div>
   }
 
+
+  <!-- ══ Comparativa Técnica de Marcas ══════════════════════════════════════ -->
+  <section class="mt-20 mb-4">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-8">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-primary font-label-md text-xs font-semibold mb-3 border border-primary/20">
+          <span class="material-symbols-outlined text-sm">bar_chart</span>
+          Modelos {{ currentYear }}
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface font-bold">Comparativa Técnica de Marcas</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1 max-w-xl">
+          Mirage, Prime y Carrier — modelos más recientes en segmento residencial, evaluados en métricas clave.
+        </p>
+      </div>
+      <!-- Legend dots -->
+      <div class="flex items-center gap-4 pb-1 flex-shrink-0">
+        @for (b of brands; track b.brand) {
+          <div class="flex items-center gap-1.5">
+            <span class="inline-block w-3 h-3 rounded-full" [style.background]="b.borderColor"></span>
+            <span class="font-label-md text-label-md text-on-surface-variant text-xs">{{ b.brand }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Main card -->
+    <div class="bg-surface-container-lowest rounded-3xl border border-surface-variant dark:border-outline-variant/30 shadow-xl overflow-hidden">
+
+      <!-- Tab bar -->
+      <div class="flex overflow-x-auto border-b border-outline-variant/30 bg-surface-container-low dark:bg-surface-container scrollbar-none">
+        @for (tab of tabs; track tab.id) {
+          <button
+            (click)="setTab(tab.id)"
+            class="flex items-center gap-2 px-5 py-4 font-label-md text-label-md whitespace-nowrap transition-all border-b-2 flex-shrink-0"
+            [class.border-primary]="activeTab === tab.id"
+            [class.text-primary]="activeTab === tab.id"
+            [class.font-bold]="activeTab === tab.id"
+            [class.border-transparent]="activeTab !== tab.id"
+            [class.text-on-surface-variant]="activeTab !== tab.id"
+          >
+            <span class="material-symbols-outlined text-base">{{ tab.icon }}</span>
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      <!-- Chart area -->
+      <div class="p-6 md:p-8">
+        @if (activeTab === 'radar') {
+          <div class="relative h-[420px] w-full">
+            <canvas baseChart [data]="radarChartData" [options]="radarChartOptions" type="radar" aria-label="Radar comparativo de marcas"></canvas>
+          </div>
+        } @else {
+          <div class="relative h-[320px] w-full">
+            <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="bar" aria-label="Gráfica de barras comparativa"></canvas>
+          </div>
+        }
+
+        <!-- Hint text -->
+        <p class="text-center mt-3 font-label-md text-xs text-on-surface-variant">
+          {{ activeTab === 'radar' ? '★ Radar normalizado 0–100 sobre 6 dimensiones técnicas' : barConfig[activeTab].note }}
+        </p>
+      </div>
+
+      <!-- Specs table -->
+      <div class="overflow-x-auto border-t border-outline-variant/30">
+        <table class="w-full text-sm">
+          <thead class="bg-surface-container-low dark:bg-surface-container">
+            <tr>
+              <th class="text-left px-6 py-3 font-label-md text-label-md text-on-surface-variant">Métrica</th>
+              @for (b of brands; track b.brand) {
+                <th class="text-center px-6 py-3 font-label-md text-label-md" [style.color]="b.borderColor">
+                  {{ b.brand }}
+                  <div class="text-on-surface-variant font-normal text-xs leading-tight">{{ b.model }}</div>
+                </th>
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <!-- SEER2 -->
+            <tr class="hover:bg-surface-container-low/50 transition-colors">
+              <td class="px-6 py-3 font-body-md text-body-md text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">energy_savings_leaf</span>
+                SEER2
+              </td>
+              @for (b of brands; track b.brand; let i = $index) {
+                <td class="px-6 py-3 text-center font-label-md text-label-md" [class.text-on-surface]="i !== bestSeer2" [class.font-bold]="i === bestSeer2">
+                  @if (i === bestSeer2) {
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                      <span class="material-symbols-outlined text-xs">star</span>{{ b.seer2 }}
+                    </span>
+                  } @else {
+                    {{ b.seer2 }}
+                  }
+                </td>
+              }
+            </tr>
+            <!-- Ruido -->
+            <tr class="hover:bg-surface-container-low/50 transition-colors">
+              <td class="px-6 py-3 font-body-md text-body-md text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">volume_mute</span>
+                Ruido (dB)
+              </td>
+              @for (b of brands; track b.brand; let i = $index) {
+                <td class="px-6 py-3 text-center font-label-md text-label-md" [class.text-on-surface]="i !== bestNoise" [class.font-bold]="i === bestNoise">
+                  @if (i === bestNoise) {
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                      <span class="material-symbols-outlined text-xs">star</span>{{ b.noiseDb }} dB
+                    </span>
+                  } @else {
+                    {{ b.noiseDb }} dB
+                  }
+                </td>
+              }
+            </tr>
+            <!-- Temp mínima -->
+            <tr class="hover:bg-surface-container-low/50 transition-colors">
+              <td class="px-6 py-3 font-body-md text-body-md text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">thermostat</span>
+                Temp. Mín. Operación
+              </td>
+              @for (b of brands; track b.brand; let i = $index) {
+                <td class="px-6 py-3 text-center font-label-md text-label-md" [class.text-on-surface]="i !== bestTemp" [class.font-bold]="i === bestTemp">
+                  @if (i === bestTemp) {
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                      <span class="material-symbols-outlined text-xs">star</span>{{ b.minTempC }}°C
+                    </span>
+                  } @else {
+                    {{ b.minTempC }}°C
+                  }
+                </td>
+              }
+            </tr>
+            <!-- Smart Score -->
+            <tr class="hover:bg-surface-container-low/50 transition-colors">
+              <td class="px-6 py-3 font-body-md text-body-md text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">wifi</span>
+                Smart / Conectividad
+              </td>
+              @for (b of brands; track b.brand) {
+                <td class="px-6 py-3 text-center">
+                  <div class="flex items-center justify-center gap-2">
+                    <div class="w-16 h-1.5 rounded-full bg-surface-container-high overflow-hidden">
+                      <div class="h-full rounded-full bg-primary transition-all duration-500" [style.width]="b.smartScore + '%'"></div>
+                    </div>
+                    <span class="font-label-md text-label-md text-on-surface-variant text-xs">{{ b.smartScore }}/100</span>
+                  </div>
+                </td>
+              }
+            </tr>
+            <!-- Garantía -->
+            <tr class="hover:bg-surface-container-low/50 transition-colors">
+              <td class="px-6 py-3 font-body-md text-body-md text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">verified_user</span>
+                Garantía Compresor
+              </td>
+              @for (b of brands; track b.brand) {
+                <td class="px-6 py-3 text-center font-label-md text-label-md text-on-surface">
+                  {{ b.warrantyYears }} años
+                </td>
+              }
+            </tr>
+            <!-- Costo-Beneficio -->
+            <tr class="hover:bg-surface-container-low/50 transition-colors">
+              <td class="px-6 py-3 font-body-md text-body-md text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">savings</span>
+                Costo-Beneficio
+              </td>
+              @for (b of brands; track b.brand) {
+                <td class="px-6 py-3 text-center">
+                  <div class="flex items-center justify-center gap-2">
+                    <div class="w-16 h-1.5 rounded-full bg-surface-container-high overflow-hidden">
+                      <div class="h-full rounded-full bg-secondary-container transition-all duration-500" [style.width]="b.costBenefitScore + '%'"></div>
+                    </div>
+                    <span class="font-label-md text-label-md text-on-surface-variant text-xs">{{ b.costBenefitScore }}/100</span>
+                  </div>
+                </td>
+              }
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer note -->
+      <div class="px-6 py-4 bg-surface-container-low/50 border-t border-outline-variant/20 flex items-center gap-2">
+        <span class="material-symbols-outlined text-outline text-sm">info</span>
+        <p class="font-body-md text-xs text-on-surface-variant">
+          Datos basados en fichas técnicas oficiales de los fabricantes (modelos 12,000 BTU, 2024). <span class="text-emerald-600 dark:text-emerald-400 font-semibold">⭐ = mejor en su categoría.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Services Section (Instalación & Mantenimiento) -->
   <section class="mt-20">
+
     <h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed mb-8 border-b border-outline-variant/30 pb-4 font-bold">Servicios Especializados</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
       <div class="bg-surface-container-low rounded-2xl p-8 border border-surface-variant dark:border-outline-variant/30 flex gap-6 tilt-card group">
