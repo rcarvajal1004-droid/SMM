@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../../../core/services/toast.service';
 import { AnimationService } from '../../../../shared/services/animation.service';
-import { BUSINESS_CONTACT_LINKS } from '../../../../core/config/business-contact.config';
+import { BtuCalculatorService } from '../../data-access/btu-calculator.service';
+import { QuoteFacade } from '../../data-access/quote.facade';
 
 @Component({
   selector: 'app-quote-tool',
@@ -15,6 +16,8 @@ import { BUSINESS_CONTACT_LINKS } from '../../../../core/config/business-contact
 export class QuoteToolComponent {
   toastService = inject(ToastService);
   private animations = inject(AnimationService);
+  private btuCalculator = inject(BtuCalculatorService);
+  private quoteFacade = inject(QuoteFacade);
 
   // BTU Calculator State
   btuArea: number | null = 20;
@@ -22,7 +25,6 @@ export class QuoteToolComponent {
   btuSun: 'low' | 'normal' | 'high' = 'normal';
   btuCalculated: number = 12000;
   tonsCalculated: string = '1.0';
-  private btuTarget: number = 12000;
 
   // Multi-step Quote State
   currentStep: number = 1;
@@ -43,31 +45,12 @@ export class QuoteToolComponent {
   }
 
   calculateBTU(): void {
-    const area = this.btuArea || 0;
-    if (area <= 0) {
-      this.btuCalculated = 0;
-      this.tonsCalculated = '0';
-      return;
-    }
-
-    let btu = area * 600;
-    if (this.btuPeople > 2) {
-      btu += (this.btuPeople - 2) * 500;
-    }
-    if (this.btuSun === 'high') {
-      btu *= 1.15;
-    } else if (this.btuSun === 'low') {
-      btu *= 0.90;
-    }
-
-    btu = Math.ceil(btu / 500) * 500;
-    this.btuTarget = btu;
-    // Transición numérica animada (no salto brusco)
+    const result = this.btuCalculator.calculate({ area: this.btuArea || 0, people: this.btuPeople, sunExposure: this.btuSun });
     const from = this.btuCalculated;
-    this.animations.countUp(from, btu, 0.6, (v) => {
+    this.animations.countUp(from, result.btu, 0.6, (v) => {
       const rounded = Math.round(v / 100) * 100;
       this.btuCalculated = rounded;
-      this.tonsCalculated = (rounded / 12000).toFixed(1);
+      this.tonsCalculated = result.btu === 0 ? '0' : (rounded / 12000).toFixed(1);
     });
   }
 
@@ -84,30 +67,16 @@ export class QuoteToolComponent {
   }
 
   getServiceLabel(): string {
-    return this.serviceType === 'hvac' ? 'Sistemas HVAC' : 'Servicios Eléctricos';
+    return this.quoteFacade.getServiceLabel(this.serviceType);
   }
 
   getUrgencyLabel(): string {
-    const urgencyMap: Record<string, string> = {
-      standard: 'Estándar',
-      urgent: 'Urgente',
-      planning: 'Planificación'
-    };
-    return urgencyMap[this.urgency] || 'Estándar';
+    return this.quoteFacade.getUrgencyLabel(this.urgency);
   }
 
   submitQuote(): void {
-    let message = `Hola Refacciones aire acondicionado y venta de Minisplit SMM, me gustaría solicitar una cotización:\n\n`;
-    message += `*Servicio:* ${this.getServiceLabel()}\n`;
-    message += `*Propiedad:* ${this.propertyType.charAt(0).toUpperCase() + this.propertyType.slice(1)}\n`;
-    message += `*Urgencia:* ${this.getUrgencyLabel()}\n`;
-    if (this.description.trim()) {
-      message += `*Detalles:* ${this.description.trim()}\n`;
-    }
-
     this.toastService.success('Cotización Generada', 'Redirigiendo a WhatsApp para conectar con un técnico...');
-
-    const whatsappUrl = `${BUSINESS_CONTACT_LINKS.whatsapp.split('?')[0]}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = this.quoteFacade.createWhatsAppUrl(this.serviceType, this.propertyType, this.urgency, this.description);
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   }
 }

@@ -72,7 +72,7 @@ export class HvacServicesComponent implements OnDestroy {
   readonly brands: BrandSpec[] = [
     {
       brand: 'Mirage',
-      model: 'Titan Inverter 2024',
+      model: 'X5 Inverter',
       seer2: 21.5,
       noiseDb: 19,
       minTempC: -15,
@@ -85,7 +85,7 @@ export class HvacServicesComponent implements OnDestroy {
     },
     {
       brand: 'Prime',
-      model: 'EliteStar Pro 2024',
+      model: 'Inverter R410A',
       seer2: 20.0,
       noiseDb: 22,
       minTempC: -10,
@@ -98,7 +98,7 @@ export class HvacServicesComponent implements OnDestroy {
     },
     {
       brand: 'Carrier',
-      model: 'Xpower Inverter 2024',
+      model: 'Infinity 21 (26VNA1)',
       seer2: 22.0,
       noiseDb: 21,
       minTempC: -15,
@@ -108,6 +108,36 @@ export class HvacServicesComponent implements OnDestroy {
       costBenefitScore: 78,
       color: 'rgba(16, 185, 129, 0.75)',
       borderColor: '#10b981'
+    },
+    {
+      brand: 'Mirage', model: 'Magnum 18', seer2: 20.5, noiseDb: 20, minTempC: -10,
+      coolingSpeedScore: 84, smartScore: 78, warrantyYears: 5, costBenefitScore: 91,
+      color: 'rgba(0, 101, 145, 0.75)', borderColor: '#006591'
+    },
+    {
+      brand: 'Mirage', model: 'XMI Split II', seer2: 20.8, noiseDb: 23, minTempC: -10,
+      coolingSpeedScore: 90, smartScore: 82, warrantyYears: 5, costBenefitScore: 87,
+      color: 'rgba(0, 101, 145, 0.75)', borderColor: '#006591'
+    },
+    {
+      brand: 'Prime', model: 'Inverter R32 SEER 20', seer2: 20.4, noiseDb: 21, minTempC: -10,
+      coolingSpeedScore: 85, smartScore: 95, warrantyYears: 3, costBenefitScore: 92,
+      color: 'rgba(254, 166, 25, 0.75)', borderColor: '#fea619'
+    },
+    {
+      brand: 'Prime', model: 'Piso/Techo Inverter', seer2: 19.8, noiseDb: 25, minTempC: -8,
+      coolingSpeedScore: 86, smartScore: 89, warrantyYears: 3, costBenefitScore: 94,
+      color: 'rgba(254, 166, 25, 0.75)', borderColor: '#fea619'
+    },
+    {
+      brand: 'Carrier', model: 'Performance 18 (26TPA8)', seer2: 21.0, noiseDb: 20, minTempC: -15,
+      coolingSpeedScore: 91, smartScore: 86, warrantyYears: 5, costBenefitScore: 80,
+      color: 'rgba(16, 185, 129, 0.75)', borderColor: '#10b981'
+    },
+    {
+      brand: 'Carrier', model: 'Comfort 16 (26SCA5)', seer2: 21.7, noiseDb: 20, minTempC: -15,
+      coolingSpeedScore: 93, smartScore: 87, warrantyYears: 5, costBenefitScore: 79,
+      color: 'rgba(16, 185, 129, 0.75)', borderColor: '#10b981'
     }
   ];
 

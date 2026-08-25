@@ -2,7 +2,8 @@
   <div class="navbar-shell flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
     <div class="navbar-brand flex items-center gap-3">
       <a routerLink="/" class="font-headline-md text-headline-md font-bold text-[#005b7a] dark:text-[#9bdcff] scale-95 active:scale-90 transition-transform no-underline">
-        Refacciones aire acondicionado y venta de Minisplit SMM
+        <span class="navbar-brand-full">Refacciones aire acondicionado y venta de Minisplit SMM</span>
+        <span class="navbar-brand-short" aria-hidden="true">SMM</span>
       </a>
       <!-- Live Status Badge -->
       <div class="hidden lg:flex items-center gap-2 bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/30 px-3 py-1 rounded-full">
@@ -49,14 +50,14 @@
           {{ themeService.isDark() ? 'light_mode' : 'dark_mode' }}
         </span>
       </button>
-      <button class="text-primary p-2" (click)="toggleMobileMenu()" aria-label="Abrir menú">
-        <span class="material-symbols-outlined">menu</span>
+      <button class="text-primary p-2" (click)="toggleMobileMenu()" [attr.aria-expanded]="mobileMenuOpen" aria-label="Abrir menú">
+        <span class="material-symbols-outlined">{{ mobileMenuOpen ? 'close' : 'menu' }}</span>
       </button>
     </div>
   </div>
 
   <!-- Mobile Drawer -->
-  <div *ngIf="mobileMenuOpen" class="md:hidden bg-surface/95 dark:bg-surface-container/95 backdrop-blur-xl border-b border-outline-variant/30 px-6 py-4 space-y-3 animate-fade-in-up">
+  <div *ngIf="mobileMenuOpen" class="navbar-mobile-drawer md:hidden bg-surface/95 dark:bg-surface-container/95 backdrop-blur-xl border-b border-outline-variant/30 px-6 py-4 space-y-3 animate-fade-in-up">
     <div class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-full w-fit mb-3">
       <span class="relative flex h-2 w-2">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

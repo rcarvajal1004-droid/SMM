@@ -67,10 +67,11 @@ export class ElectricalServicesComponent {
   }
 
   autoBalance(): void {
-    const avg = Math.round(this.totalLoad / 3);
+    const totalLoad = this.totalLoad;
+    const avg = Math.round(totalLoad / 3);
     this.phaseA = avg;
     this.phaseB = avg;
-    this.phaseC = this.totalLoad - (avg * 2);
+    this.phaseC = totalLoad - (avg * 2);
     this.toastService.success('Fases Balanceadas con Éxito', `Carga distribuida equitativamente en ~${avg}A por fase.`);
   }
 

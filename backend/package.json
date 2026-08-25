@@ -7,10 +7,23 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
-    "check": "node --check src/index.js"
+    "check": "node --check src/index.js",
+    "test": "node --test"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
     "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "express-rate-limit": "^8.6.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mssql": "^12.7.0",
+    "zod": "^4.4.3"
+  },
+  "optionalDependencies": {
+    "msnodesqlv8": "^5.2.3"
+  },
+  "devDependencies": {
+    "supertest": "^7.2.2"
   }
 }

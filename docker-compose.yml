@@ -1,0 +1,57 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: climatech-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "ClimaTech!Pass2026"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+      # Inicialización: crea la BD y las tablas la primera vez (solo si está vacía)
+      - ./backend/database/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P ClimaTech!Pass2026 -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./backend
+    container_name: climatech-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_SERVER: db
+      DB_INSTANCE: ""
+      DB_PORT: 1433
+      DB_NAME: SmmDb
+      DB_USER: sa
+      DB_PASSWORD: ClimaTech!Pass2026
+      DB_TRUSTED_CONNECTION: "false"
+      DB_ENCRYPT: "false"
+      DB_TRUST_SERVER_CERTIFICATE: "true"
+      JWT_SECRET: "docker-prod-secret-change-me-0123456789abcdef"
+      CORS_ORIGIN: "http://localhost"
+      MSSQL_SA_PASSWORD: "ClimaTech!Pass2026"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: climatech-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  sql_data:

@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { SmmLayoutComponent } from './smm-layout.component';
+import { authGuard } from '../../core/guards/auth.guard';
 
 export const SMM_ROUTES: Routes = [
   {
     path: '',
     component: SmmLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',

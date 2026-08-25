@@ -6,7 +6,7 @@ import { SmmService, SmmOrder, UserProfile } from '../models/smm.model';
 
 @Injectable({ providedIn: 'root' })
 export class SmmApiService {
-  private baseUrl = 'http://localhost:3000/api/smm';
+  private baseUrl = '/api/smm';
 
   constructor(private http: HttpClient) {}
 

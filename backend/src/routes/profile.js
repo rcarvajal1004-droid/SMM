@@ -1,16 +1,13 @@
 ﻿import { Router } from 'express';
+import { userRepository } from '../modules/users/user.repository.js';
 
 const router = Router();
 
-const profile = {
-  id: 1,
-  username: 'demo_user',
-  balance: 156.75,
-  apiKey: 'sk_mock_key'
-};
-
-router.get('/', (req, res) => {
-  res.json(profile);
+router.get('/', async (req, res, next) => {
+  try {
+    const user = await userRepository.findById(req.user.id);
+    res.json({ id: user.id, username: user.username, balance: user.balance, apiKey: null });
+  } catch (error) { next(error); }
 });
 
 export default router;

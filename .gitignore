@@ -9,5 +9,10 @@ frontend/ECC/
 # Dependencies
 node_modules/
 
+# Local secrets
+.env
+.env.*
+!.env.example
+
 # Build outputs
 dist/

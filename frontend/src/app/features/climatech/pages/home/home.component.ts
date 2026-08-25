@@ -6,23 +6,7 @@ import { gsap } from 'gsap';
 import { AnimationService } from '../../../../shared/services/animation.service';
 import { GsRevealDirective } from '../../../../shared/directives/gs-reveal.directive';
 import { BUSINESS_CONTACT, BUSINESS_CONTACT_LINKS } from '../../../../core/config/business-contact.config';
-
-interface BrandPreview {
-  name: string;
-  model: string;
-  accent: 'primary' | 'amber' | 'emerald';
-  seer2: string;
-  noiseDb: string;
-  minTemp: string;
-  warranty: string;
-  smartScore?: string;
-  isBestSeer?: boolean;
-  isBestNoise?: boolean;
-  isBestTemp?: boolean;
-  isBestSmart?: boolean;
-  color: string;
-  borderColor: string;
-}
+import { EquipmentComparisonPreviewComponent } from '../../components/equipment-comparison-preview/equipment-comparison-preview.component';
 
 interface Testimonial {
   name: string;
@@ -45,7 +29,7 @@ interface Stat {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, GsRevealDirective],
+  imports: [CommonModule, RouterLink, GsRevealDirective, EquipmentComparisonPreviewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -85,44 +69,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { icon: 'star', value: 49, suffix: '★', label: 'Calificación de usuarios', current: 0 }
   ];
 
-  readonly brands: BrandPreview[] = [
-    {
-      name: 'Mirage', model: `Titan Inverter ${this.currentYear}`, accent: 'primary',
-      seer2: '21.5', noiseDb: '19 dB', minTemp: '-15°C', warranty: '5 años',
-      isBestNoise: true, isBestTemp: true,
-      color: 'rgba(0,101,145,0.75)', borderColor: '#006591'
-    },
-    {
-      name: 'Prime', model: `EliteStar Pro ${this.currentYear}`, accent: 'amber',
-      seer2: '20.0', noiseDb: '22 dB', minTemp: '-10°C', smartScore: '92/100', warranty: '3 años',
-      isBestSmart: true,
-      color: 'rgba(254,166,25,0.75)', borderColor: '#fea619'
-    },
-    {
-      name: 'Carrier', model: `Xpower Inverter ${this.currentYear}`, accent: 'emerald',
-      seer2: '22.0', noiseDb: '21 dB', minTemp: '-15°C', warranty: '5 años',
-      isBestSeer: true, isBestTemp: true,
-      color: 'rgba(16,185,129,0.75)', borderColor: '#10b981'
-    }
-  ];
-
-  readonly accentRing: Record<BrandPreview['accent'], string> = {
-    primary: 'border-[#006591]/30 hover:shadow-[#006591]/25',
-    amber: 'border-secondary-container/30 hover:shadow-secondary-container/25',
-    emerald: 'border-emerald-500/30 hover:shadow-emerald-500/25'
-  };
-
-  readonly accentIconClass: Record<BrandPreview['accent'], string> = {
-    primary: 'bg-[#006591]/20 border-[#006591]/40 text-[#5eb2d9]',
-    amber: 'bg-secondary-container/20 border-secondary-container/40 text-secondary-container',
-    emerald: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-500'
-  };
-
-  readonly accentTextClass: Record<BrandPreview['accent'], string> = {
-    primary: 'text-[#5eb2d9]',
-    amber: 'text-secondary-container',
-    emerald: 'text-emerald-500'
-  };
 
   readonly testimonials: Testimonial[] = [
     {

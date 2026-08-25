@@ -6,6 +6,26 @@ body {
     color: #131b2e;
 }
 
+html.dark body {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+html.dark .navbar-mobile-drawer {
+  background-color: #111827 !important;
+  color: #f8fafc !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+html.dark .navbar-mobile-drawer a {
+  color: #f8fafc !important;
+}
+
+html.dark .navbar-mobile-drawer a:hover,
+html.dark .navbar-mobile-drawer a:focus-visible {
+  color: #9bdcff !important;
+}
+
 /* Shared content axis for all public Climatech pages. */
 .climatech-page {
   width: 100%;
@@ -18,6 +38,21 @@ body {
 .climatech-page .max-w-6xl,
 .climatech-page .max-w-5xl {
   margin-inline: auto;
+}
+
+html.dark .climatech-page {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+html:not(.dark) .climatech-page .text-on-surface-variant,
+html:not(.dark) .climatech-page .text-outline-variant {
+  color: #334155;
+}
+
+html.dark .climatech-page .text-on-surface-variant,
+html.dark .climatech-page .text-outline-variant {
+  color: #dbeafe;
 }
 
 .material-symbols-outlined {

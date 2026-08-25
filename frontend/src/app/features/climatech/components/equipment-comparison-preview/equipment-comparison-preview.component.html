@@ -1,0 +1,49 @@
+<section class="comparison-preview" aria-labelledby="comparison-preview-title">
+  <div class="comparison-preview__header">
+    <div>
+      <span class="comparison-preview__eyebrow">Comparativa de equipos</span>
+      <h2 id="comparison-preview-title">Compara modelos antes de decidir</h2>
+      <p>Explora nueve equipos de Mirage, Prime y Carrier con métricas técnicas comparables.</p>
+    </div>
+    <a routerLink="/hvac-services" class="comparison-preview__link">
+      Ver catálogo completo
+      <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+    </a>
+  </div>
+
+  <div class="comparison-preview__controls" role="group" aria-label="Filtros de comparación">
+    <div class="comparison-preview__segmented">
+      <button type="button" [class.is-active]="category === 'todos'" (click)="setCategory('todos')">Todos</button>
+      <button type="button" [class.is-active]="category === 'residencial'" (click)="setCategory('residencial')">Residenciales</button>
+      <button type="button" [class.is-active]="category === 'comercial'" (click)="setCategory('comercial')">Comerciales</button>
+    </div>
+    <label class="comparison-preview__select">
+      <span>Métrica</span>
+      <select [value]="metric" (change)="setMetric($any($event.target).value)">
+        @for (option of metricOptions; track option.id) {
+          <option [value]="option.id">{{ option.label }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  <div class="comparison-preview__chart">
+    <canvas baseChart [data]="chartData" [options]="chartOptions" type="bar" aria-label="Comparación de equipos por modelo"></canvas>
+  </div>
+
+  <div class="comparison-preview__legend">
+    @for (item of visibleEquipment; track item.id) {
+      <span><i [style.background]="item.borderColor"></i>{{ item.brand }} {{ item.model }}</span>
+    }
+  </div>
+
+  <div class="comparison-preview__models" aria-label="Modelos incluidos en la comparación">
+    @for (item of visibleEquipment; track item.id) {
+      <article class="comparison-preview__model">
+        <span class="comparison-preview__model-brand" [style.color]="item.borderColor">{{ item.brand }}</span>
+        <strong>{{ item.model }}</strong>
+        <span>{{ item.btu | number }} BTU · {{ item.category }}</span>
+      </article>
+    }
+  </div>
+</section>

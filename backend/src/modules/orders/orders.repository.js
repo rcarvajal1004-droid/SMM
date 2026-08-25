@@ -1,14 +1,83 @@
-const orders = [
-  { id: 101, serviceId: 1, serviceName: 'Instagram Followers', link: 'https://instagram.com/user1', quantity: 500, charge: 6.25, status: 'Completed', createdAt: '2024-01-15' },
-  { id: 102, serviceId: 4, serviceName: 'TikTok Likes', link: 'https://tiktok.com/@user2/video/123', quantity: 1000, charge: 6.50, status: 'In progress', createdAt: '2024-01-16' },
-  { id: 103, serviceId: 6, serviceName: 'YouTube Views', link: 'https://youtube.com/watch?v=abc123', quantity: 5000, charge: 17.50, status: 'Pending', createdAt: '2024-01-17' }
-];
+import { getDatabasePool, sql } from '../../config/database.js';
+
+const mapRow = (row) => row && ({
+  id: row.OrderId,
+  userId: row.UserId,
+  serviceId: row.ServiceId,
+  serviceName: row.ServiceName,
+  link: row.TargetUrl,
+  quantity: row.Quantity,
+  charge: Number(row.Charge),
+  status: row.Status,
+  createdAt: row.CreatedAt
+});
 
 export const ordersRepository = {
-  findAll() { return [...orders]; },
-  create(order) {
-    const created = { id: Date.now(), ...order, status: 'Pending', createdAt: new Date().toISOString().split('T')[0] };
-    orders.unshift(created);
-    return created;
+  async findAll(userId) {
+    const pool = await getDatabasePool();
+    const result = await pool.request()
+      .input('userId', sql.Int, Number(userId))
+      .query(`
+        SELECT o.OrderId, o.UserId, o.ServiceId, s.Name AS ServiceName,
+               o.TargetUrl, o.Quantity, o.Charge, o.Status, o.CreatedAt
+        FROM dbo.Orders o
+        INNER JOIN dbo.Services s ON s.ServiceId = o.ServiceId
+        WHERE o.UserId = @userId
+        ORDER BY o.CreatedAt DESC
+      `);
+    return result.recordset.map(mapRow);
+  },
+
+  async findById(orderId) {
+    const pool = await getDatabasePool();
+    const result = await pool.request()
+      .input('id', sql.BigInt, Number(orderId))
+      .query(`
+        SELECT o.OrderId, o.UserId, o.ServiceId, s.Name AS ServiceName,
+               o.TargetUrl, o.Quantity, o.Charge, o.Status, o.CreatedAt
+        FROM dbo.Orders o
+        INNER JOIN dbo.Services s ON s.ServiceId = o.ServiceId
+        WHERE o.OrderId = @id
+      `);
+    return mapRow(result.recordset[0]);
+  },
+
+  async create(userId, { serviceId, link, quantity, charge }) {
+    const pool = await getDatabasePool();
+    const result = await pool.request()
+      .input('userId', sql.Int, Number(userId))
+      .input('serviceId', sql.Int, Number(serviceId))
+      .input('link', sql.NVarChar(2048), link)
+      .input('quantity', sql.Int, Number(quantity))
+      .input('charge', sql.Decimal(12, 4), charge)
+      .query(`
+        INSERT INTO dbo.Orders (UserId, ServiceId, TargetUrl, Quantity, Charge, Status)
+        OUTPUT INSERTED.OrderId
+        VALUES (@userId, @serviceId, @link, @quantity, @charge, 'Pending')
+      `);
+    const orderId = result.recordset[0].OrderId;
+
+    const withService = await pool.request()
+      .input('id', sql.BigInt, orderId)
+      .query(`
+        SELECT o.OrderId, o.UserId, o.ServiceId, s.Name AS ServiceName,
+               o.TargetUrl, o.Quantity, o.Charge, o.Status, o.CreatedAt
+        FROM dbo.Orders o
+        INNER JOIN dbo.Services s ON s.ServiceId = o.ServiceId
+        WHERE o.OrderId = @id
+      `);
+    return mapRow(withService.recordset[0]);
+  },
+
+  async updateStatus(orderId, status) {
+    const pool = await getDatabasePool();
+    const validStatuses = ['Pending', 'In progress', 'Completed', 'Canceled', 'Failed'];
+    if (!validStatuses.includes(status)) {
+      throw new Error(`Invalid status: ${status}`);
+    }
+    await pool.request()
+      .input('id', sql.BigInt, Number(orderId))
+      .input('status', sql.VarChar(20), status)
+      .query('UPDATE dbo.Orders SET Status = @status, UpdatedAt = SYSUTCDATETIME() WHERE OrderId = @id');
   }
 };
